@@ -1,2 +1,5 @@
-package bibliotheque;public class TypeOuvrage {
+package bibliotheque;
+
+public enum TypeOuvrage {
+    LIVRE,CD,DVD
 }

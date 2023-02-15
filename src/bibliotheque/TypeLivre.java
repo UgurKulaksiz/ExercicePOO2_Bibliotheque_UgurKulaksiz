@@ -1,2 +1,5 @@
-package bibliotheque;public class TypeLivre {
+package bibliotheque;
+
+public enum TypeLivre {
+    ROMAN,NOUVELLE,ESSAI,DOCUMENTAIRE,BIOGRAPHIE;
 }
