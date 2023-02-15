@@ -12,7 +12,7 @@ public class Gestion {
                 TypeOuvrage.CD, 10.00, "français","aventure","a125",350,TypeLivre.ROMAN,"histoire de sous-marin");
         //a.getLouvrage().add(l);
         //l.getLauteurs().add(a);
-        a.addAuteurOuvrage(l);
+        a.addAuteurOuvrage(l); //Ajout d'un auteur dans la liste Ouvrage et ajout d'un ouvrage dans la liste Auteur
 
         //3° Créer un rayon
         Rayon r = new Rayon("r12","aventure");
