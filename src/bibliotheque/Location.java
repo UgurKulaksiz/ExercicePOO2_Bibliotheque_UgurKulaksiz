@@ -76,7 +76,4 @@ public class Location {
                 '}';
     }
 
-    public void add(){
-
-    }
 }
