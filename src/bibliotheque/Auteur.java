@@ -70,8 +70,8 @@ public class Auteur {
                 '}';
     }
 
-    public void addAuteurOuvrage(Ouvrage ouv){
-        getLouvrage().add(ouv);
+    public void addOuvrageAuteur(Ouvrage ouv){
+        louvrage.add(ouv);
         ouv.getLauteurs().add(this);
     }
 }

@@ -86,4 +86,15 @@ public class Exemplaire {
                 ", rayon=" + rayon +
                 '}';
     }
+
+    public void modifierEtat(String etat){
+        //TODO coder méthode modifier état
+
+    }
+
+    public Lecteur lecteurActuel(){
+        //TODO coder etc
+        
+        return null;
+    }
 }
