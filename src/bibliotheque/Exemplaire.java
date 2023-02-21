@@ -97,4 +97,9 @@ public class Exemplaire {
         
         return null;
     }
+
+    public void deleteExemplaire(Exemplaire exemp){
+        lloc.remove(exemp);
+        exemp.getLloc().remove(this);
+    }
 }

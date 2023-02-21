@@ -74,6 +74,11 @@ public class Auteur {
         louvrage.add(ouv);
         ouv.getLauteurs().add(this);
     }
+
+    public void deleteOuvrageAuteur(Ouvrage ouv){
+        louvrage.remove(ouv);
+        ouv.getLauteurs().remove(this);
+    }
 }
 
 
