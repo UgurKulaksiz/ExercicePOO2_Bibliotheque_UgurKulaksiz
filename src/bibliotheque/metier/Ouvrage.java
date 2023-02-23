@@ -1,4 +1,4 @@
-package bibliotheque;
+package bibliotheque.metier;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -99,6 +99,7 @@ public abstract class Ouvrage {
         this.lex = lex;
     }
 
+
     @Override
     public String toString() {
         return "Ouvrage{" +
@@ -110,5 +111,38 @@ public abstract class Ouvrage {
                 ", langue='" + langue + '\'' +
                 ", genre='" + genre + '\'' +
                 '}';
+    }
+    public abstract double amendeRetard(int njours);
+    public void addAuteur(Auteur aut){
+        lauteurs.add(aut);
+        aut.getLouvrage().add(this);
+    }
+
+    public void remove(Auteur aut){
+        lauteurs.remove(aut);
+        aut.getLouvrage().remove(this);
+    }
+    public void addExemplaire(Exemplaire exemp){
+        lex.add(exemp);
+        exemp.setOuvrage(this);
+    }
+
+    public void remove(Exemplaire exemp){
+        lex.remove(exemp);
+        exemp.setOuvrage(null);
+    }
+    public List<Exemplaire>listerExemplaires(){
+        //TODO lister exemplaires ouvrage
+        List<Exemplaire> lex = new ArrayList<>();
+        for (Exemplaire exemplaire : lex) {
+            lex.add(exemplaire);
+        }
+
+        return lex;
+    }
+
+    public List<Exemplaire>listerExemplaires(boolean enLocation){
+        //TODO lister exemplaires ouvrage en location
+        return null;
     }
 }

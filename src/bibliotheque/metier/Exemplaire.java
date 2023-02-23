@@ -1,4 +1,4 @@
-package bibliotheque;
+package bibliotheque.metier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,12 +51,14 @@ public class Exemplaire {
         this.descriptionEtat = descriptionEtat;
     }
 
-    public Ouvrage getOuvrage() {
+     public Ouvrage getOuvrage() {
         return ouvrage;
     }
 
     public void setOuvrage(Ouvrage ouvrage) {
+        if(this.ouvrage!=null) this.ouvrage.getLex().remove(this);
         this.ouvrage = ouvrage;
+        this.ouvrage.getLex().add(this);
     }
 
     public Rayon getRayon() {
@@ -64,6 +66,7 @@ public class Exemplaire {
     }
 
     public void setRayon(Rayon rayon) {
+        //S'il y a déjà un ouvrage dans un exemplaire, on le supprime et on ajoute le nouveau ouvrage
         if(this.rayon!=null) this.rayon.getLex().remove(this);
         this.rayon=rayon;
         this.rayon.getLex().add(this);
@@ -88,18 +91,59 @@ public class Exemplaire {
     }
 
     public void modifierEtat(String etat){
-        //TODO coder méthode modifier état
+        //TODO modifier etat exemplaire
 
     }
 
     public Lecteur lecteurActuel(){
-        //TODO coder etc
-        
-        return null;
+        //TODO lecteur actuel exemplaire
+        List<Lecteur> lLecteur = new ArrayList<>();
+        for (Location location : lloc) {
+            //if(location.getDateRestitution().isBef)
+            lLecteur.add(location.getLoueur());
+        }
+
+        return lLecteur;
+    }
+    public List<Lecteur> lecteurs(){
+        //TODO lecteurs exemplaire
+        List<Lecteur> lLecteur = new ArrayList<>();
+        for (Location location : lloc) {
+            lLecteur.add(location.getLoueur());
+        }
+
+        return lLecteur;
     }
 
-    public void deleteExemplaire(Exemplaire exemp){
-        lloc.remove(exemp);
-        exemp.getLloc().remove(this);
+    public void envoiMailLecteurActuel(Mail mail){
+        //TODO envoi mail lecteur exemplaire
+
     }
+    public void envoiMailLecteurs(Mail mail){
+        //TODO envoi mail lecteurs exemplaire
+        //Faire un println du contenu du mail
+
+    }
+
+    public boolean enRetard(){
+        //TODO enretard exemplaire
+
+        return false;
+    }
+
+    public int joursRetard(){
+        //TODO jours retard exemplaire
+
+        return 0;
+    }
+
+
+    public boolean enLocation(){
+        //TODO en location exemplaires
+
+        return false;
+    }
+
+
+
 }

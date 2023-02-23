@@ -1,4 +1,4 @@
-package bibliotheque;
+package bibliotheque.metier;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,8 +15,8 @@ public class DVD extends Ouvrage{
     public DVD(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre,long code,String dureeTotale,byte nbreBonus) {
         super(titre, ageMin, dateParution, TypeOuvrage.DVD, prixLocation, langue, genre);
         this.code=code;
-        this.dureeTotale=dureeTotale;
-        this.nbreBonus=nbreBonus;
+       this.dureeTotale=dureeTotale;
+       this.nbreBonus=nbreBonus;
     }
 
     public long getCode() {
@@ -71,7 +71,12 @@ public class DVD extends Ouvrage{
     public int hashCode() {
         return Objects.hash(code);
     }
+    @Override
+    public double amendeRetard(int njours) {
+        //TODO amendeRetard DVD
 
+        return 0;
+    }
     @Override
     public String toString() {
         return super.toString()+"DVD{" +
