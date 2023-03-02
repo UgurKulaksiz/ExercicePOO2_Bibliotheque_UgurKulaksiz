@@ -133,6 +133,7 @@ public abstract class Ouvrage {
     }
     public List<Exemplaire>listerExemplaires(){
         //TODO lister exemplaires ouvrage
+
         List<Exemplaire> lex = new ArrayList<>();
         for (Exemplaire exemplaire : lex) {
             lex.add(exemplaire);
@@ -143,6 +144,14 @@ public abstract class Ouvrage {
 
     public List<Exemplaire>listerExemplaires(boolean enLocation){
         //TODO lister exemplaires ouvrage en location
-        return null;
+
+        List<Exemplaire> lex = new ArrayList<>();
+        for (Exemplaire exemplaire : lex) {
+            if(enLocation == true){
+                lex.add(exemplaire);
+            }
+        }
+
+        return lex;
     }
 }

@@ -82,6 +82,7 @@ public class Auteur {
 
     public List<Ouvrage> listerOuvrages() {
         //TODO lister ouvrages
+
         List<Ouvrage> louv = new ArrayList<>();
         for (Ouvrage ouvrage : louv) {
             louv.add(ouvrage);
@@ -92,6 +93,7 @@ public class Auteur {
 
     public List<Ouvrage> listerOuvrages(TypeOuvrage to) {
         //TODO lister ouvrages d'un type
+
         List<Ouvrage> louv = new ArrayList<>();
         for (Ouvrage ouvrage : louv) {
             if (ouvrage.getTo().toString().equals(to.toString())) {
@@ -104,6 +106,7 @@ public class Auteur {
 
     public List<Livre> listerLivres(TypeLivre tl) {
         //TODO lister livres d'un type
+
         List<Livre> lLivre = new ArrayList<>();
         for (Livre livre : lLivre) {
             if (livre.getTl().equals(tl.toString())) {
@@ -116,6 +119,7 @@ public class Auteur {
 
     public List<Ouvrage> listerOuvrages(String genre) {
         //TODO lister ouvrages d'un genre
+
         List<Ouvrage> louv = new ArrayList<>();
         for (Ouvrage ouvrage : louv) {
             if (ouvrage.getGenre().equals(genre)) {

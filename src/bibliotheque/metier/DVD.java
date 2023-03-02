@@ -1,6 +1,7 @@
 package bibliotheque.metier;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -75,7 +76,14 @@ public class DVD extends Ouvrage{
     public double amendeRetard(int njours) {
         //TODO amendeRetard DVD
 
-        return 0;
+        Double amende = 0.50;
+        if (dateParution.isBefore(LocalDate.now())){
+            Period p = dateParution.until(LocalDate.now());
+            njours = p.getDays();
+            amende = amende * njours;
+        }
+
+        return amende;
     }
     @Override
     public String toString() {

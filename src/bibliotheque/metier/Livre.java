@@ -1,6 +1,7 @@
 package bibliotheque.metier;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Objects;
 
 public class Livre extends Ouvrage{
@@ -64,12 +65,6 @@ public class Livre extends Ouvrage{
     }
 
     @Override
-    public double amendeRetard(int njours) {
-        //TODO amendeRetard livre
-        return 0;
-    }
-
-    @Override
     public String toString() {
         return super.toString()+ "Livre{" +
                 "isbn='" + isbn + '\'' +
@@ -77,5 +72,19 @@ public class Livre extends Ouvrage{
                 ", tl=" + tl +
                 ", resume='" + resume + '\'' +
                 "} " + super.toString();
+    }
+
+    @Override
+    public double amendeRetard(int njours) {
+        //TODO amendeRetard livre
+
+        Double amende = 0.50;
+        if(dateParution.isBefore(LocalDate.now())){
+            Period p = dateParution.until(LocalDate.now());
+            njours = p.getDays();
+            amende = amende * njours;
+        }
+
+        return amende;
     }
 }

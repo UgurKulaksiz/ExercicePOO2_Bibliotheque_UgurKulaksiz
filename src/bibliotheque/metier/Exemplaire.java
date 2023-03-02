@@ -1,5 +1,8 @@
 package bibliotheque.metier;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,12 +15,12 @@ public class Exemplaire {
     private Ouvrage ouvrage;
     private Rayon rayon;
 
-    private List<Location> lloc= new ArrayList<>();
+    private List<Location> lloc = new ArrayList<>();
 
 
-    public Exemplaire(String matricule, String descriptionEtat,Ouvrage ouvrage) {
+    public Exemplaire(String matricule, String descriptionEtat, Ouvrage ouvrage) {
         this.matricule = matricule;
-        this.descriptionEtat=descriptionEtat;
+        this.descriptionEtat = descriptionEtat;
         this.ouvrage = ouvrage;
         this.ouvrage.getLex().add(this);
     }
@@ -51,12 +54,12 @@ public class Exemplaire {
         this.descriptionEtat = descriptionEtat;
     }
 
-     public Ouvrage getOuvrage() {
+    public Ouvrage getOuvrage() {
         return ouvrage;
     }
 
     public void setOuvrage(Ouvrage ouvrage) {
-        if(this.ouvrage!=null) this.ouvrage.getLex().remove(this);
+        if (this.ouvrage != null) this.ouvrage.getLex().remove(this);
         this.ouvrage = ouvrage;
         this.ouvrage.getLex().add(this);
     }
@@ -67,8 +70,8 @@ public class Exemplaire {
 
     public void setRayon(Rayon rayon) {
         //S'il y a déjà un ouvrage dans un exemplaire, on le supprime et on ajoute le nouveau ouvrage
-        if(this.rayon!=null) this.rayon.getLex().remove(this);
-        this.rayon=rayon;
+        if (this.rayon != null) this.rayon.getLex().remove(this);
+        this.rayon = rayon;
         this.rayon.getLex().add(this);
     }
 
@@ -90,23 +93,30 @@ public class Exemplaire {
                 '}';
     }
 
-    public void modifierEtat(String etat){
+    public void modifierEtat(String etat) {
         //TODO modifier etat exemplaire
-
     }
 
-    public Lecteur lecteurActuel(){
+    public Lecteur lecteurActuel() {
         //TODO lecteur actuel exemplaire
+
         List<Lecteur> lLecteur = new ArrayList<>();
         for (Location location : lloc) {
-            //if(location.getDateRestitution().isBef)
-            lLecteur.add(location.getLoueur());
+            if (location.getDateRestitution().isBefore(java.time.LocalDate.now())) {
+                lLecteur.add(location.getLoueur());
+            }
         }
 
-        return lLecteur;
+        if (!lLecteur.isEmpty()) {
+            return lLecteur.get(lLecteur.indexOf(lloc));
+        } else {
+            return null;
+        }
     }
-    public List<Lecteur> lecteurs(){
+
+    public List<Lecteur> lecteurs() {
         //TODO lecteurs exemplaire
+
         List<Lecteur> lLecteur = new ArrayList<>();
         for (Location location : lloc) {
             lLecteur.add(location.getLoueur());
@@ -115,35 +125,35 @@ public class Exemplaire {
         return lLecteur;
     }
 
-    public void envoiMailLecteurActuel(Mail mail){
+    public void envoiMailLecteurActuel(Mail mail) {
         //TODO envoi mail lecteur exemplaire
 
     }
-    public void envoiMailLecteurs(Mail mail){
+
+    public void envoiMailLecteurs(Mail mail) {
         //TODO envoi mail lecteurs exemplaire
         //Faire un println du contenu du mail
 
     }
 
-    public boolean enRetard(){
+    public boolean enRetard() {
         //TODO enretard exemplaire
 
         return false;
     }
 
-    public int joursRetard(){
+    public int joursRetard() {
         //TODO jours retard exemplaire
+        int jRetard = 0;
 
-        return 0;
+        return jRetard;
     }
 
-
-    public boolean enLocation(){
+    public boolean enLocation() {
         //TODO en location exemplaires
 
         return false;
     }
-
 
 
 }

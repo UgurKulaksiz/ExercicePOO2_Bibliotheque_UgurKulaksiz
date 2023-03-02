@@ -69,7 +69,13 @@ public class Rayon {
 
     public List<Exemplaire>listerExemplaires(){
         //TODO lister exemplaires rayon
-        return null;
+
+        List<Exemplaire> lex = new ArrayList<>();
+        for (Exemplaire exemplaire : lex) {
+                lex.add(exemplaire);
+        }
+
+        return lex;
     }
 
 
