@@ -83,6 +83,11 @@ public class Gestion {
         //Permet de construire une liste avec toutes les options du menu
         List options = new ArrayList<>(Arrays.asList("auteurs", "ouvrages", "exemplaires", "rayons", "lecteurs", "locations", "fin"));
 
+        Lecteur lec = null;
+        lec = new Lecteur(lec.getNumlecteur(), lec.getNom(), lec.getPrenom(), lec.getDn(), lec.getAdresse(), lec.getMail(), lec.getTel());
+        Exemplaire ex = null;
+        ex = new Exemplaire(ex.getMatricule(), ex.getDescriptionEtat(), ex.getOuvrage());
+
         do {
             for (int i = 0; i < options.size(); i++) {
                 System.out.println((i + 1) + "." + options.get(i)); //Afficher les options du menu avec un compteur
@@ -111,7 +116,7 @@ public class Gestion {
                     gestLecteurs();
                     break;
                 case 6:
-                    gestLocations();
+                    gestLocations(lec, ex);
                     break;
                 default:
                     System.exit(0);
@@ -119,8 +124,77 @@ public class Gestion {
         } while (true);
     }
 
-    private void gestLocations() {
+    private void gestLocations(Lecteur lect, Exemplaire ex) {
         //TODO lister exemplaires,lister lecteurs,créer la location avec le constructeur à deux paramètres(loueur,exemplaire)
+
+        List<Exemplaire> lex = new ArrayList<>();
+        for (Exemplaire exemplaire : lex) {
+            lex.add(ex);
+        }
+
+        List<Lecteur> lLecteur = new ArrayList<>();
+        for (Lecteur lecteur : lLecteur) {
+            lLecteur.add(lect);
+        }
+
+        //Création de la location
+        System.out.println("Date location : ");
+        String[] jmaLoc = sc.nextLine().split(" "); //Diviser les variables(jour, mois et année) par un espace (" ")
+        int jLoc = Integer.parseInt(jmaLoc[0]);
+        int mLoc = Integer.parseInt(jmaLoc[1]);
+        int aLoc = Integer.parseInt(jmaLoc[2]);
+        LocalDate dLocation = LocalDate.of(aLoc, mLoc, jLoc); //Transformer les variables(jour, mois et année) sous forme de date
+        System.out.println("Date de restitution");
+        String[] jmaResti = sc.nextLine().split(" "); //Diviser les variables(jour, mois et année) par un espace (" ")
+        int jResti = Integer.parseInt(jmaResti[0]);
+        int mResti = Integer.parseInt(jmaResti[1]);
+        int aResti = Integer.parseInt(jmaResti[2]);
+        LocalDate dResti = LocalDate.of(aResti, mResti, jResti); //Transformer les variables(jour, mois et année) sous forme de date
+        //Loueur
+        System.out.println("Numéro : ");
+        int num = sc.nextInt();
+        sc.skip("\n");
+        System.out.println("Nom : ");
+        String nom = sc.nextLine();
+        System.out.println("Prénom : ");
+        String prenom = sc.nextLine();
+        System.out.println("Date de naissance : ");
+        String[] jma = sc.nextLine().split(" "); //Diviser les variables(jour, mois et année) par un espace (" ")
+        int j = Integer.parseInt(jma[0]);
+        int m = Integer.parseInt(jma[1]);
+        int a = Integer.parseInt(jma[2]);
+        LocalDate dnaiss = LocalDate.of(a, m, j); //Transformer les variables(jour, mois et année) sous forme de date
+        System.out.println("Adresse : ");
+        String adr = sc.nextLine();
+        System.out.println("Mail : ");
+        String mail = sc.nextLine();
+        System.out.println("Tel : ");
+        String tel = sc.nextLine();
+        Lecteur lectNew = new Lecteur(num, nom, prenom, dnaiss, adr, mail, tel); //Création du lecteur
+        llect.add(lectNew); //Ajout du lecteur créé dans la liste lecteur
+        System.out.println("Lecteur créé");
+        //Exemplaire
+        System.out.println("Matricule : ");
+        String mat = sc.next();
+        System.out.println("Etat : ");
+        String etat = sc.next();
+        System.out.println("Ouvrage : ");
+        for (int i = 0; i < louv.size(); i++) {
+            System.out.println((i + 1 + "." + louv.get(i)));
+        }
+        int choix;
+        do {
+            System.out.println("Choix : ");
+            choix = sc.nextInt();
+            sc.skip("\n");
+        } while (choix < 1 || choix > louv.size());
+        Exemplaire exNew = new Exemplaire(mat, etat, louv.get(choix - 1)); //Création de l'exemplaire avec la matricule, l'état et le choix du type d l'ouvrage
+        lex.add(exNew); //Ajout de l'exemplaire créé à la liste d'exemplaire
+        System.out.println("Exemplaire créé");
+
+        Location loc = new Location(dLocation, dResti, lectNew, exNew); //Création de la location
+        lloc.add(loc); //Ajout de la location créé dans la liste location
+        System.out.println("Location créée");
 
     }
 
@@ -220,7 +294,7 @@ public class Gestion {
                 TypeLivre tl = TypeLivre.ROMAN; //TODO lire le type de livre
                 String resume = "résumé du livre"; //TODO lire le résumé
                 o = new Livre(titre, ageMin, dp, ploc, langue, genre, isbn, nbrePages, tl, resume);
-                System.out.println(resume+" : "+o);
+                System.out.println(resume + " : " + o);
                 ;
                 break;
             case 2:     //TODO gérer création DVD

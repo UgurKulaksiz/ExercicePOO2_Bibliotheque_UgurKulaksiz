@@ -95,6 +95,10 @@ public class Exemplaire {
 
     public void modifierEtat(String etat) {
         //TODO modifier etat exemplaire
+
+        Exemplaire exemplaire = new Exemplaire(matricule, descriptionEtat, ouvrage);
+        exemplaire.setDescriptionEtat(etat);
+
     }
 
     public Lecteur lecteurActuel() {
@@ -127,6 +131,7 @@ public class Exemplaire {
 
     public void envoiMailLecteurActuel(Mail mail) {
         //TODO envoi mail lecteur exemplaire
+
 
     }
 
