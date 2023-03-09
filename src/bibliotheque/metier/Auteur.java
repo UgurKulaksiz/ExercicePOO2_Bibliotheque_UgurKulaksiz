@@ -81,22 +81,17 @@ public class Auteur {
     }
 
     public List<Ouvrage> listerOuvrages() {
-        //TODO lister ouvrages
+        //OKTODO lister ouvrages
 
-        List<Ouvrage> louv = new ArrayList<>();
-        for (Ouvrage ouvrage : louv) {
-            louv.add(ouvrage);
-        }
-
-        return louv;
+        return louvrage;
     }
 
     public List<Ouvrage> listerOuvrages(TypeOuvrage to) {
-        //TODO lister ouvrages d'un type
+        //OKTODO lister ouvrages d'un type
 
         List<Ouvrage> louv = new ArrayList<>();
-        for (Ouvrage ouvrage : louv) {
-            if (ouvrage.getTo().toString().equals(to.toString())) {
+        for (Ouvrage ouvrage : louvrage) {
+            if (ouvrage.getTo().equals(to)) {
                 louv.add(ouvrage);
             }
         }
@@ -105,12 +100,15 @@ public class Auteur {
     }
 
     public List<Livre> listerLivres(TypeLivre tl) {
-        //TODO lister livres d'un type
+        //OKTODO lister livres d'un type
 
         List<Livre> lLivre = new ArrayList<>();
-        for (Livre livre : lLivre) {
-            if (livre.getTl().equals(tl.toString())) {
-                System.out.println(livre.toString());
+        for (Ouvrage ouvrage : louvrage) {
+            if (ouvrage.getTo().equals(TypeOuvrage.LIVRE)) {
+                Livre l = (Livre) ouvrage;
+                if(l.getTl().equals(tl)){
+                    lLivre.add(l);
+                }
             }
         }
 
@@ -118,10 +116,10 @@ public class Auteur {
     }
 
     public List<Ouvrage> listerOuvrages(String genre) {
-        //TODO lister ouvrages d'un genre
+        //OKTODO lister ouvrages d'un genre
 
         List<Ouvrage> louv = new ArrayList<>();
-        for (Ouvrage ouvrage : louv) {
+        for (Ouvrage ouvrage : louvrage) {
             if (ouvrage.getGenre().equals(genre)) {
                 louv.add(ouvrage);
             }

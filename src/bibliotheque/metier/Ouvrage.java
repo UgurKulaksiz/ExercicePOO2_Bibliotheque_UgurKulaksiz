@@ -112,7 +112,12 @@ public abstract class Ouvrage {
                 ", genre='" + genre + '\'' +
                 '}';
     }
+
     public abstract double amendeRetard(int njours);
+
+    public abstract int njlocmax();
+
+
     public void addAuteur(Auteur aut){
         lauteurs.add(aut);
         aut.getLouvrage().add(this);
@@ -132,26 +137,21 @@ public abstract class Ouvrage {
         exemp.setOuvrage(null);
     }
     public List<Exemplaire>listerExemplaires(){
-        //TODO lister exemplaires ouvrage
-
-        List<Exemplaire> lex = new ArrayList<>();
-        for (Exemplaire exemplaire : lex) {
-            lex.add(exemplaire);
-        }
+        //OKTODO lister exemplaires ouvrage
 
         return lex;
     }
 
     public List<Exemplaire>listerExemplaires(boolean enLocation){
-        //TODO lister exemplaires ouvrage en location
+        //OKTODO lister exemplaires ouvrage en location
 
-        List<Exemplaire> lex = new ArrayList<>();
+        List<Exemplaire> lex2 = new ArrayList<>();
         for (Exemplaire exemplaire : lex) {
-            if(enLocation == true){
-                lex.add(exemplaire);
+            if(exemplaire.enLocation() == enLocation){
+                lex2.add(exemplaire);
             }
         }
 
-        return lex;
+        return lex2;
     }
 }

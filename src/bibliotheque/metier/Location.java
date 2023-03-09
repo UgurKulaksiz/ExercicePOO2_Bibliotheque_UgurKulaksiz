@@ -2,6 +2,7 @@ package bibliotheque.metier;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 public class Location {
@@ -81,45 +82,23 @@ public class Location {
     }
 
     public double calculerAmende() {
-        //TODO calcul amende location sur base dote restitution : la durée du prêt est de 15 jours pour les livres, 3 jours pour les DVD et 7 jours pour les CD
+        //OKTODO calcul amende location sur base dote restitution : la durée du prêt est de 15 jours pour les livres, 3 jours pour les DVD et 7 jours pour les CD
 
-        int dureePretLivre = 15; // Durée de prêt pour les livres
-        int dureePretDVD = 3; // Durée de prêt pour les DVD
-        int dureePretCD = 7;  // Durée de prêt pour les CD
-        double amende = 0.0;
-
-
-        // Calculer la durée de location
-        Period p = dateLocation.until(dateRestitution);
-        int dureeLocation = p.getDays();
-
-        //LIVRES
-        // Si la durée de location est supérieure à la durée de prêt, appliquer une amende
-        if (dureeLocation > dureePretLivre) {
-            int joursRetard = dureeLocation - dureePretLivre;
-            amende = 0.50 * joursRetard; // Amende de 0.50 euro par jour de retard
+        if (dateRestitution != null) {
+            LocalDate dateLimite = dateLocation.plusDays(exemplaire.getOuvrage().njlocmax());
+            if (dateRestitution.isAfter(dateLimite)) {
+                int njretard = (int) ChronoUnit.DAYS.between(dateLimite, dateRestitution);
+                return exemplaire.getOuvrage().amendeRetard(njretard);
+            }
         }
 
-        //DVD
-        if (dureeLocation > dureePretDVD) {
-            int joursRetard = dureeLocation - dureePretDVD;
-            amende = 0.50 * joursRetard; // Amende de 0.50 euro par jour de retard
-        }
-
-        //CD
-        if (dureeLocation > dureePretCD) {
-            int joursRetard = dureeLocation - dureePretCD;
-            amende = 0.50 * joursRetard; // Amende de 0.50 euro par jour de retard
-        }
-
-        return amende;
+        return 0;
     }
 
     public void enregistrerRetour() {
-        //TODO enregistrer retour => la date de restitution devient égale à la date actuelle
+        //OKTODO enregistrer retour => la date de restitution devient égale à la date actuelle
 
-        if (dateLocation.isEqual(dateRestitution)) {
-            exemplaire.getLloc();
-        }
+        if (dateLocation == null)
+            dateRestitution = LocalDate.now();
     }
 }

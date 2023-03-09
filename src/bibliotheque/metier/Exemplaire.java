@@ -3,8 +3,10 @@ package bibliotheque.metier;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class Exemplaire {
@@ -94,68 +96,93 @@ public class Exemplaire {
     }
 
     public void modifierEtat(String etat) {
-        //TODO modifier etat exemplaire
+        //OKTODO modifier etat exemplaire
 
-        Exemplaire exemplaire = new Exemplaire(matricule, descriptionEtat, ouvrage);
-        exemplaire.setDescriptionEtat(etat);
-
+        setDescriptionEtat(etat);
     }
 
     public Lecteur lecteurActuel() {
-        //TODO lecteur actuel exemplaire
+        //OKTODO lecteur actuel exemplaire
 
-        List<Lecteur> lLecteur = new ArrayList<>();
-        for (Location location : lloc) {
-            if (location.getDateRestitution().isBefore(java.time.LocalDate.now())) {
-                lLecteur.add(location.getLoueur());
-            }
-        }
-
-        if (!lLecteur.isEmpty()) {
-            return lLecteur.get(lLecteur.indexOf(lloc));
-        } else {
+        if(enLocation()){
+            return lloc.get(lloc.size()-1).getLoueur();
+        }else{
             return null;
         }
     }
 
     public List<Lecteur> lecteurs() {
-        //TODO lecteurs exemplaire
+        //OKTODO lecteurs exemplaire
 
         List<Lecteur> lLecteur = new ArrayList<>();
         for (Location location : lloc) {
+            if(lLecteur.contains(location)){
+                continue; //Par la suite utiliser 'set'
+            }
             lLecteur.add(location.getLoueur());
         }
 
-        return lLecteur;
+        return null;
     }
 
     public void envoiMailLecteurActuel(Mail mail) {
-        //TODO envoi mail lecteur exemplaire
+        //OKTODO envoi mail lecteur exemplaire
 
+        if(lecteurActuel() != null)
+            System.out.println("Envoi de "+mail+" à "+lecteurActuel().getMail());
+        else
+            System.out.println("Aucune location en cours ");
 
     }
 
     public void envoiMailLecteurs(Mail mail) {
-        //TODO envoi mail lecteurs exemplaire
+        //OKTODO envoi mail lecteurs exemplaire
         //Faire un println du contenu du mail
+
+        List<Lecteur> lLecteur = lecteurs();
+        if(lLecteur.isEmpty()){
+            System.out.println("Aucun lecteur enregistré ");
+        }else{
+            for (Lecteur lecteur : lLecteur){
+                System.out.println("Envoi de "+mail+" à "+lecteur.getMail());
+            }
+        }
 
     }
 
-    public boolean enRetard() {
-        //TODO enretard exemplaire
+    public boolean enRetard() { //par retard on entend pas encore restitué et en retard
+        //OKTODO enretard exemplaire
+
+        if(lloc.isEmpty())
+            return false;
+        Location location = lloc.get(lloc.size()-1); //la location en cours est la dernière  de la liste, sauf si elle est terminée
+
+        if(location.getDateRestitution()==null && location.getDateLocation().plusDays(ouvrage.njlocmax()).isAfter(LocalDate.now()))
+                return true;
 
         return false;
     }
 
     public int joursRetard() {
-        //TODO jours retard exemplaire
-        int jRetard = 0;
+        //OKTODO jours retard exemplaire
 
-        return jRetard;
+        if(!enRetard())
+            return 0;
+        Location location = lloc.get(lloc.size()-1); //la location en cours est la dernière de la liste
+        LocalDate dateLimite = location.getDateLocation().plusDays(ouvrage.njlocmax());
+        int njretard = (int) ChronoUnit.DAYS.between(dateLimite, LocalDate.now());
+
+        return njretard;
     }
 
     public boolean enLocation() {
-        //TODO en location exemplaires
+        //OKTODO en location exemplaires
+
+        if(lloc.isEmpty())
+            return false;
+        Location location = lloc.get(lloc.size()-1); //la location en cours est la dernière de la liste
+        if(location.getDateRestitution() == null)
+            return true;
 
         return false;
     }

@@ -76,15 +76,12 @@ public class Livre extends Ouvrage{
 
     @Override
     public double amendeRetard(int njours) {
-        //TODO amendeRetard livre
 
-        Double amende = 0.50;
-        if(dateParution.isBefore(LocalDate.now())){
-            Period p = dateParution.until(LocalDate.now());
-            njours = p.getDays();
-            amende = amende * njours;
-        }
+        return njours * 0.25;
+    }
 
-        return amende;
+    @Override
+    public int njlocmax() {
+        return 15;
     }
 }

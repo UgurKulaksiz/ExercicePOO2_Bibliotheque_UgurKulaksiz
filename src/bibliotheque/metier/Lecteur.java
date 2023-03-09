@@ -116,16 +116,26 @@ public class Lecteur {
     }
 
     public List<Exemplaire> listerExemplairesEnLocation(){
-        //TODO lister exemplaires en location lecteur
-        for (Location location : lloc){
+        //OKTODO lister exemplaires en location lecteur
 
+        List<Exemplaire> lex = new ArrayList<>();
+        for (Location location : lloc){
+            if(location.getDateRestitution() != null)
+                lex.add(location.getExemplaire());
         }
-        return null;
+
+        return lex;
     }
 
     public List<Exemplaire> listerExemplairesEnLoues(){
-        //TODO lister exemplaires loues lecteur
+        //OKTODO lister exemplaires loues lecteur
 
-        return null;
+        List<Exemplaire> lex = new ArrayList<>();
+        for (Location location : lloc){
+            lex.add(location.getExemplaire());
+            //OKTODO empêcher doublon si exemplaire loué plusieurs fois par même lecteur
+        }
+
+        return lex;
     }
 }
