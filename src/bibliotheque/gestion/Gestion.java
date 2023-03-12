@@ -6,10 +6,7 @@ import bibliotheque.utilitaires.*;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Gestion {
     Scanner sc = new Scanner(System.in);
@@ -34,7 +31,7 @@ public class Gestion {
         a = new Auteur("Spielberg", "Steven", "USA");
         laut.add(a);
 
-        DVD d = new DVD("AI", 12, LocalDate.of(2000, 10, 1), 2.50, "anglais", "SF", 4578l, LocalTime.of(2,0,0),(byte)2);
+        DVD d = new DVD("AI", 12, LocalDate.of(2000, 10, 1), 2.50, "anglais", "SF", 4578l, LocalTime.of(2, 0, 0), (byte) 2);
         d.getAutresLangues().add("français");
         d.getAutresLangues().add("italien");
         d.getSousTitres().add("néerlandais");
@@ -48,7 +45,7 @@ public class Gestion {
         a.addOuvrage(d);
 
 
-        CD c = new CD("The Compil 2023", 0, LocalDate.of(2023, 1, 1), 2, "English", "POP", 1245, (byte) 20, LocalTime.of(1,40,0));
+        CD c = new CD("The Compil 2023", 0, LocalDate.of(2023, 1, 1), 2, "English", "POP", 1245, (byte) 20, LocalTime.of(1, 40, 0));
         louv.add(c);
 
         Rayon r = new Rayon("r12", "aventure");
@@ -86,40 +83,84 @@ public class Gestion {
         //Permet de construire une liste avec toutes les options du menu
         List options = new ArrayList<>(Arrays.asList("auteurs", "ouvrages", "exemplaires", "rayons", "lecteurs", "locations", "fin"));
 
-        do{
+        do {
             int choix = Utilitaire.choixListe(options);
 
-            switch (choix){
-                case 1 :gestAuteurs(); break;
-                case 2 : gestOuvrages();break;
-                case 3 : gestExemplaires();break;
-                case 4 : gestRayons();break;
-                case 5 : gestLecteurs();break;
-                case 6 : gestLocations();break;
-                case 7 : gestRestitution();break;
-                default:System.exit(0);
+            switch (choix) {
+                case 1:
+                    gestAuteurs();
+                    break;
+                case 2:
+                    gestOuvrages();
+                    break;
+                case 3:
+                    gestExemplaires();
+                    break;
+                case 4:
+                    gestRayons();
+                    break;
+                case 5:
+                    gestLecteurs();
+                    break;
+                case 6:
+                    gestLocations();
+                    break;
+                case 7:
+                    gestRestitution();
+                    break;
+                default:
+                    System.exit(0);
             }
-        }  while (true);
+        } while (true);
     }
 
     private void gestRestitution() {
         //TODO lister exemplaires en location , choisir l'un d'entre eux, enregistrer sa restitution et éventuellement changer état
+
+        int choix;
+        //lister exemplaires en location
+        List<Exemplaire> listeExemplairesLocation = new ArrayList<>();
+        for (Exemplaire exemplaire : lex) {
+            if (exemplaire.enLocation()) {
+                listeExemplairesLocation.add(exemplaire);
+            }
+        }
+
+        //choisir l'un d'entre eux, enregistrer sa restitution et éventuellement changer état
+        choix = Utilitaire.choixListe(listeExemplairesLocation);
+        Exemplaire exemplaire = listeExemplairesLocation.get(choix - 1);
+        exemplaire.setDescriptionEtat(exemplaire.getDescriptionEtat());
+
     }
+
     private void gestLocations() {
         //TODO ne lister que les exemplaires libres et les trier par matricule
+
+        List<Exemplaire> listeExemplairesLibres = new ArrayList<>();
+        for (Exemplaire exemplaire : lex) { //Parcourir la liste des exemplaires
+            if (!exemplaire.enLocation()) { //Si l'exemplaire n'est pas en location
+                listeExemplairesLibres.add(exemplaire); //Ajout à la liste libre, l'exemplaire qui n'est pas en location
+            }
+        }
+        Collections.sort(listeExemplairesLibres, new Comparator<Exemplaire>() { //Méthode de trie par matricule
+            @Override
+            public int compare(Exemplaire e1, Exemplaire e2) {
+                return e1.getMatricule().compareTo(e2.getMatricule());
+            }
+        });
 
         //OKTODO lister exemplaires,lister lecteurs,créer la location avec le constructeur à deux paramètres(loueur,exemplaire)
 
         int choix;
         choix = Utilitaire.choixListe(lex);
-        if(lex.get(choix).enLocation()){
+        if (lex.get(choix).enLocation()) {
             System.out.println("exemplaire en location");
             return;
         }
-        Exemplaire ex = lex.get(choix-1);
-        choix=Utilitaire.choixListe(llect);
-        Lecteur lec = llect.get(choix-1);
-        lloc.add(new Location(lec,ex));
+        Exemplaire ex = lex.get(choix - 1);
+        choix = Utilitaire.choixListe(llect);
+        Lecteur lec = llect.get(choix - 1);
+        lloc.add(new Location(lec, ex));
 
     }
 
@@ -158,6 +199,15 @@ public class Gestion {
 
         //TODO attribuer exemplaire, les exemplaires sont triés par ordre de titre de l'ouvrage , empêcher doublons sur l'exemplaire
 
+        System.out.println("Combien d'exemplaires voulez-vous ajouter au rayon ?");
+        int nbExemplaires = sc.nextInt();
+
+        Exemplaire e = null;
+        for (int i = 0; i < nbExemplaires; i++) {
+            System.out.println("Création d'un nouvel exemplaire pour le rayon " + code + " - " + genre);
+            gestExemplaires();
+            r.addExemplaire(e);
+        }
     }
 
     private void gestExemplaires() {
@@ -180,6 +230,19 @@ public class Gestion {
         System.out.println("Exemplaire créé");
 
         //TODO attribuer rayon , les rayons sont triès par ordre de code
+
+        System.out.println("Création d'un rayon pour l'exemplaire " + ex + " : ");
+        List<Rayon> listeRayon = new ArrayList<>();
+        for (Rayon r : lrayon) {
+            gestRayons();
+            r.addExemplaire(ex);
+        }
+        Collections.sort(listeRayon, new Comparator<Rayon>() {
+            @Override
+            public int compare(Rayon rayon1, Rayon rayon2) {
+                return rayon1.getCodeRayon().compareTo(rayon2.getCodeRayon());
+            }
+        });
 
     }
 
@@ -268,7 +331,7 @@ public class Gestion {
          */
 
         List<OuvrageFactory> lof = new ArrayList<>(Arrays.asList(new LivreFactory(), new CDFactory(), new DVDFactory()));
-        ouvrage = lof.get(choix-1).create();
+        ouvrage = lof.get(choix - 1).create();
         louv.add(ouvrage);
         System.out.println("Ouvrage créé");
 
