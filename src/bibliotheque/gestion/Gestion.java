@@ -136,18 +136,18 @@ public class Gestion {
     private void gestLocations() {
         //TODO ne lister que les exemplaires libres et les trier par matricule
 
+        Collections.sort(lex, new Comparator<Exemplaire>() { //Méthode de trie par matricule
+            @Override
+            public int compare(Exemplaire e1, Exemplaire e2) {
+                return e1.getMatricule().compareTo(e2.getMatricule());
+            }
+        });
         List<Exemplaire> listeExemplairesLibres = new ArrayList<>();
         for (Exemplaire exemplaire : lex) { //Parcourir la liste des exemplaires
             if (!exemplaire.enLocation()) { //Si l'exemplaire n'est pas en location
                 listeExemplairesLibres.add(exemplaire); //Ajout à la liste libre, l'exemplaire qui n'est pas en location
             }
         }
-        Collections.sort(listeExemplairesLibres, new Comparator<Exemplaire>() { //Méthode de trie par matricule
-            @Override
-            public int compare(Exemplaire e1, Exemplaire e2) {
-                return e1.getMatricule().compareTo(e2.getMatricule());
-            }
-        });
 
         //OKTODO lister exemplaires,lister lecteurs,créer la location avec le constructeur à deux paramètres(loueur,exemplaire)
 
@@ -237,12 +237,16 @@ public class Gestion {
             gestRayons();
             r.addExemplaire(ex);
         }
-        Collections.sort(listeRayon, new Comparator<Rayon>() {
+        Collections.sort(lrayon, new Comparator<Rayon>() {
             @Override
             public int compare(Rayon rayon1, Rayon rayon2) {
                 return rayon1.getCodeRayon().compareTo(rayon2.getCodeRayon());
             }
         });
+
+        for (int i = 0; i < lrayon.size(); i++) {
+            System.out.println((i + 1 + "." + lrayon.get(i)));
+        }
 
     }
 
@@ -337,6 +341,30 @@ public class Gestion {
 
         //TODO attribuer auteurs, les auteur sont triés par odre de nom et prénom, empêcher doublons
 
+        System.out.println("Création d'un auteur ");
+        List<Auteur> listeAuteur = new ArrayList<>();
+        for (Auteur auteur : laut) {
+            gestAuteurs();
+            auteur.addOuvrage(ouvrage);
+        }
+        Collections.sort(laut, new Comparator<Auteur>() {
+            @Override
+            public int compare(Auteur auteur1, Auteur auteur2) {
+                return (auteur1.getNom().compareTo(auteur2.getNom()));
+            }
+        });
+        Collections.sort(laut, new Comparator<Auteur>() {
+            @Override
+            public int compare(Auteur auteur1, Auteur auteur2) {
+                return (auteur1.getPrenom().compareTo(auteur2.getPrenom()));
+            }
+        });
+
+        for (int i = 0; i < laut.size(); i++) {
+            System.out.println((i + 1 + "." + laut.get(i)));
+        }
+
+
     }
 
     private void gestAuteurs() {
@@ -352,6 +380,22 @@ public class Gestion {
 
         //TODO attribuer ouvrages , les ouvrages sont triés par ordre de titre
 
+        System.out.println("Création d'un ouvrage ");
+        List<Ouvrage> listeOuvrage = new ArrayList<>();
+        for (Ouvrage ouvrage : louv) {
+            gestOuvrages();
+            ouvrage.addAuteur(a);
+        }
+        Collections.sort(louv, new Comparator<Ouvrage>() {
+            @Override
+            public int compare(Ouvrage ouvrage1, Ouvrage ouvrage2) {
+                return ouvrage1.getTitre().compareTo(ouvrage2.getTitre());
+            }
+        });
+
+        for (int i = 0; i < louv.size(); i++) {
+            System.out.println((i + 1 + "." + louv.get(i)));
+        }
     }
 
     public static void main(String[] args) {
