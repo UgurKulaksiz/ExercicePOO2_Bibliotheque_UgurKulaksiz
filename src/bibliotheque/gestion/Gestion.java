@@ -208,6 +208,15 @@ public class Gestion {
             gestExemplaires();
             r.addExemplaire(e);
         }
+
+        Collections.sort(lex, new Comparator<Exemplaire>() {
+            @Override
+            public int compare(Exemplaire exemplaire1, Exemplaire exemplaire2) {
+                return exemplaire1.getOuvrage().getTitre().compareTo(exemplaire2.getOuvrage().getTitre());
+            }
+        });
+
+        //empêcher doublons sur l'exemplaire --> Utiliser HashSets et equals
     }
 
     private void gestExemplaires() {
@@ -364,6 +373,7 @@ public class Gestion {
             System.out.println((i + 1 + "." + laut.get(i)));
         }
 
+        //empêcher doublons sur les auteurs --> Utiliser HashSets et equals
 
     }
 
