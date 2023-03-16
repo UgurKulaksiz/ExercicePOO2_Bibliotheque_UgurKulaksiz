@@ -92,6 +92,6 @@ public class DVD extends Ouvrage{
                 ", nbreBonus=" + nbreBonus +
                 ", autresLangues=" + autresLangues +
                 ", sousTitres=" + sousTitres +
-                "} " + super.toString();
+                "} ";
     }
 }

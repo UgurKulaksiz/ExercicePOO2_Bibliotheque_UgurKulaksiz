@@ -9,11 +9,11 @@ public class Utilitaire {
 
     private static Scanner sc = new Scanner(System.in);
 
-    public static int choixListe(List l){
+    public static int choixListe(List l) {
 
-        int i =1;
-        for(Object o : l) {
-            System.out.println((i++)+"."+o);
+        int i = 1;
+        for (Object o : l) {
+            System.out.println((i++) + "." + o);
         }
 
         int choix;
@@ -21,26 +21,44 @@ public class Utilitaire {
             System.out.println("Choix :");
             choix = sc.nextInt();
             sc.skip("\n");
-        } while(choix <1 || choix > l.size());
+        } while (choix < 1 || choix > l.size());
 
         return choix;
     }
 
-    public static LocalDate lecDate(){
-        String[] jma = sc.nextLine().split(" ");
-        int j = Integer.parseInt(jma[0]);
-        int m = Integer.parseInt(jma[1]);
-        int a = Integer.parseInt(jma[2]);
-
-        return LocalDate.of(a,m,j);
+    public static void affListe(List liste) {
+        int i = 1;
+        for (Object o : liste) {
+            System.out.println((i++) + ". " + o);
+        }
     }
 
-    public static LocalTime lecTime(){
+    public static int choixElt(List liste) {
+        int choix;
+        do {
+            System.out.println("Choix : ");
+            choix = sc.nextInt();
+            sc.skip("\n");
+        } while (choix < 1 || choix > liste.size());
+
+        return choix;
+    }
+
+    public static LocalDate lecDate() {
         String[] jma = sc.nextLine().split(" ");
         int j = Integer.parseInt(jma[0]);
         int m = Integer.parseInt(jma[1]);
         int a = Integer.parseInt(jma[2]);
 
-        return LocalTime.of(a,m,j);
+        return LocalDate.of(a, m, j);
+    }
+
+    public static LocalTime lecTime() {
+        String[] jma = sc.nextLine().split(" ");
+        int j = Integer.parseInt(jma[0]);
+        int m = Integer.parseInt(jma[1]);
+        int a = Integer.parseInt(jma[2]);
+
+        return LocalTime.of(a, m, j);
     }
 }
