@@ -85,7 +85,11 @@ public class LecteurViewConsole implements LecteurViewInterface {
                     break;
                 case 3:
                     System.out.println("Date de naissance : ");
-                    LocalDate dn = LocalDate.parse(sc.nextLine());
+                    String[] jma = sc.nextLine().split(" ");
+                    int j = Integer.parseInt(jma[0]);
+                    int m = Integer.parseInt(jma[1]);
+                    int a = Integer.parseInt(jma[2]);
+                    LocalDate dn = LocalDate.of(a, m, j);
                     lecteur.setDn(dn);
                     break;
                 case 4:
