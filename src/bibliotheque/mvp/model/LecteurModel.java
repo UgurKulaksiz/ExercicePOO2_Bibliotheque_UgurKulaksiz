@@ -30,7 +30,6 @@ public class LecteurModel implements DAOLecteur{
     public Lecteur updateLecteur(Lecteur lec) {
         boolean present= lecteurs.contains(lec);
         if(present){
-            lec.setNumlecteur(lec.getNumlecteur());
             lec.setNom(lec.getNom());
             lec.setPrenom(lec.getPrenom());
             lec.setDn(lec.getDn());

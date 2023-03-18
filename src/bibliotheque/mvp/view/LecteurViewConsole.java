@@ -60,6 +60,7 @@ public class LecteurViewConsole implements LecteurViewInterface {
     private void modifier() {
         //TODO choisir elt et demander les nouvelles valeurs puis appeler méthode maj(lecteur) (à développer) du presenter
 
+        System.out.println(llec);
         Utilitaire.affListe(llec);
         int choix = Utilitaire.choixElt(llec);
         Lecteur lecteur = llec.get(choix - 1);
