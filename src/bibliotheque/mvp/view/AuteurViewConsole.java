@@ -57,7 +57,7 @@ public class AuteurViewConsole implements AuteurViewInterface {
     }
 
     private void modifier() {
-        //TODO choisir elt et demander les nouvelles valeurs puis appeler méthode maj(lecteur) (à développer) du presenter
+        //TODO choisir elt et demander les nouvelles valeurs puis appeler méthode maj(auteur) (à développer) du presenter
 
         System.out.println(lAuteur);
         Utilitaire.affListe(lAuteur);

@@ -1,15 +1,10 @@
 package bibliotheque.mvp;
 
-import bibliotheque.mvp.model.AuteurModel;
-import bibliotheque.mvp.model.DAOAuteur;
-import bibliotheque.mvp.model.DAOLecteur;
-import bibliotheque.mvp.model.LecteurModel;
+import bibliotheque.mvp.model.*;
 import bibliotheque.mvp.presenter.AuteurPresenter;
 import bibliotheque.mvp.presenter.LecteurPresenter;
-import bibliotheque.mvp.view.AuteurViewConsole;
-import bibliotheque.mvp.view.AuteurViewInterface;
-import bibliotheque.mvp.view.LecteurViewConsole;
-import bibliotheque.mvp.view.LecteurViewInterface;
+import bibliotheque.mvp.presenter.RayonPresenter;
+import bibliotheque.mvp.view.*;
 
 public class GestBiblio {
     public static void main(String[] args) {
@@ -29,5 +24,13 @@ public class GestBiblio {
 
         AuteurPresenter lectPA = new AuteurPresenter(lectA, lectVA);
         lectPA.start();
+
+        /* RAYON */
+        DAORayon lectRay = new RayonModel();
+
+        RayonViewInterface lectVRay = new RayonViewConsole();
+
+        RayonPresenter leectPRay = new RayonPresenter(lectRay, lectVRay);
+        leectPRay.start();
     }
 }
