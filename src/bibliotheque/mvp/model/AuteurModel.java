@@ -25,6 +25,14 @@ public class AuteurModel implements DAOAuteur{
     }
 
     @Override
+    public Auteur readAuteur(String nomAuteur) {
+        for (Auteur aut : auteurs) {
+            if (aut.getNom() == nomAuteur) return aut;
+        }
+        return null;
+    }
+
+    @Override
     public Auteur updateAuteur(Auteur aut) {
         boolean present= auteurs.contains(aut);
         if(present){
@@ -33,6 +41,7 @@ public class AuteurModel implements DAOAuteur{
             aut.setNationalite(aut.getNationalite());
             aut.setLouvrage(aut.getLouvrage());
 
+            auteurs.set(auteurs.indexOf(aut), aut);
             return aut;
         }
         else return null;

@@ -27,6 +27,14 @@ public class LecteurModel implements DAOLecteur{
     }
 
     @Override
+    public Lecteur readLecteur(int idLecteur) {
+        for (Lecteur l : lecteurs) {
+            if (l.getNumlecteur() == idLecteur) return l;
+        }
+        return null;
+    }
+
+    @Override
     public Lecteur updateLecteur(Lecteur lec) {
         boolean present= lecteurs.contains(lec);
         if(present){

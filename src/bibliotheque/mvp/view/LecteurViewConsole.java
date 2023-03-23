@@ -1,5 +1,6 @@
 package bibliotheque.mvp.view;
 
+import bibliotheque.metier.Exemplaire;
 import bibliotheque.metier.Lecteur;
 import bibliotheque.mvp.presenter.LecteurPresenter;
 import bibliotheque.utilitaires.Utilitaire;
@@ -9,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+
+import static bibliotheque.utilitaires.Utilitaire.*;
 
 public class LecteurViewConsole implements LecteurViewInterface {
     private LecteurPresenter presenter;
@@ -36,8 +39,13 @@ public class LecteurViewConsole implements LecteurViewInterface {
         System.out.println("information:" + msg);
     }
 
+    @Override
+    public void affList(List<Exemplaire> lex) {
+        affListe(lex);
+    }
+
     public void menu() {
-        List options = new ArrayList<>(Arrays.asList("ajouter", "retirer", "modifier", "fin"));
+        List options = new ArrayList<>(Arrays.asList("ajouter", "retirer", "rechercher", "modifier", "special", "fin"));
         do {
             int ch = Utilitaire.choixListe(options);
 
@@ -49,76 +57,52 @@ public class LecteurViewConsole implements LecteurViewInterface {
                     retirer();
                     break;
                 case 3:
-                    modifier();
+                    rechercher();
                     break;
                 case 4:
-                    System.exit(0);
+                    modifier();
+                    break;
+                case 5:
+                    special();
+                    break;
+                case 6:
+                    return;
             }
         } while (true);
+    }
+
+    private void rechercher() {
+        System.out.println("numLecteur : ");
+        int idLecteur = sc.nextInt();
+        presenter.search(idLecteur);
     }
 
     private void modifier() {
-        //TODO choisir elt et demander les nouvelles valeurs puis appeler méthode maj(lecteur) (à développer) du presenter
-
-        System.out.println(llec);
+        int choix = choixElt(llec);
+        Lecteur l = llec.get(choix-1);
+        String nom = modifyIfNotBlank("nom",l.getNom());
+        String prenom = modifyIfNotBlank("prénom",l.getPrenom());
+        String date = modifyIfNotBlank("date de naissance",getDateFrench(l.getDn()));
+        String[] jma = date.split(" ");
+        int j = Integer.parseInt(jma[0]);
+        int m = Integer.parseInt(jma[1]);
+        int a = Integer.parseInt(jma[2]);
+        LocalDate dn = LocalDate.of(a, m, j);
+        String adr = modifyIfNotBlank("adresse",l.getAdresse());
+        String mail= modifyIfNotBlank("mail",l.getMail());
+        String tel =modifyIfNotBlank("tel",l.getTel());
+        Lecteur lec = new Lecteur(l.getNumlecteur(), nom, prenom, dn, adr, mail, tel);
+        presenter.updateLecteur(lec);
+        llec=presenter.getAll();//rafraichissement
         Utilitaire.affListe(llec);
-        int choix = Utilitaire.choixElt(llec);
-        Lecteur lecteur = llec.get(choix - 1);
-        presenter.updateLecteur(lecteur);
-        choixModif(lecteur);
-    }
-
-    private void choixModif(Lecteur lecteur) {
-        List options = new ArrayList<>(Arrays.asList("Nom", "Prénom", "Date de naissance", "Adresse", "Mail", "Tel"));
-
-        do {
-            int choix = Utilitaire.choixListe(options);
-            switch (choix) {
-                case 1:
-                    System.out.println("Nom : ");
-                    String nom = sc.nextLine();
-                    lecteur.setNom(nom);
-                    break;
-                case 2:
-                    System.out.println("Prénom : ");
-                    String prenom = sc.nextLine();
-                    lecteur.setPrenom(prenom);
-                    break;
-                case 3:
-                    System.out.println("Date de naissance : ");
-                    String[] jma = sc.nextLine().split(" ");
-                    int j = Integer.parseInt(jma[0]);
-                    int m = Integer.parseInt(jma[1]);
-                    int a = Integer.parseInt(jma[2]);
-                    LocalDate dn = LocalDate.of(a, m, j);
-                    lecteur.setDn(dn);
-                    break;
-                case 4:
-                    System.out.println("Adresse = ");
-                    String adresse = sc.nextLine();
-                    lecteur.setAdresse(adresse);
-                    break;
-                case 5:
-                    System.out.println("Mail : ");
-                    String mail = sc.nextLine();
-                    lecteur.setMail(mail);
-                    break;
-                case 6:
-                    System.out.println("Téléphone : ");
-                    String tel = sc.nextLine();
-                    lecteur.setNom(tel);
-                    break;
-                case 7:
-                    System.exit(0);
-            }
-        } while (true);
-
     }
 
     private void retirer() {
-        int choix = Utilitaire.choixElt(llec);
-        Lecteur lecteur = llec.get(choix - 1);
+        int choix = choixElt(llec);
+        Lecteur lecteur = llec.get(choix-1);
         presenter.removeLecteur(lecteur);
+        llec=presenter.getAll();//rafraichissement
+        Utilitaire.affListe(llec);
     }
 
 
@@ -141,5 +125,30 @@ public class LecteurViewConsole implements LecteurViewInterface {
         String tel = sc.nextLine();
         Lecteur lec = new Lecteur(0, nom, prenom, dn, adr, mail, tel);
         presenter.addLecteur(lec);
+        llec=presenter.getAll();//rafraichissement
+        Utilitaire.affListe(llec);
+    }
+    private void special() {
+        int choix =  choixElt(llec);
+        Lecteur lec = llec.get(choix-1);
+        do {
+            System.out.println("1.Exemplaire en location\n2.Exemplaires loués\n3.menu principal");
+            System.out.println("choix : ");
+            int ch = sc.nextInt();
+            sc.skip("\n");
+            switch (ch) {
+                case 1:
+                    presenter.exemplairesEnLocation(lec);
+                    break;
+                case 2:
+                    presenter.exemplairesLoues(lec);
+                    break;
+                case 3: return;
+                default:
+                    System.out.println("choix invalide recommencez ");
+            }
+        } while (true);
+
+
     }
 }

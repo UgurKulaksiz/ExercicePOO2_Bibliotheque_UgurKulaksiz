@@ -1,7 +1,9 @@
 package bibliotheque.mvp.presenter;
 
+import bibliotheque.metier.Exemplaire;
 import bibliotheque.metier.Lecteur;
 import bibliotheque.mvp.model.DAOLecteur;
+import bibliotheque.mvp.model.SpecialLecteur;
 import bibliotheque.mvp.view.LecteurViewInterface;
 
 import java.util.List;
@@ -17,8 +19,11 @@ public class LecteurPresenter {
     }
 
     public void start() {
-        List<Lecteur> lecteurs = model.getLecteurs();
-        view.setListDatas(lecteurs);
+        view.setListDatas(getAll());
+    }
+
+    public List<Lecteur> getAll(){
+        return model.getLecteurs();
     }
 
     public void addLecteur(Lecteur lecteur) {
@@ -27,6 +32,8 @@ public class LecteurPresenter {
         else view.affMsg("erreur de création");
         List<Lecteur> lecteurs = model.getLecteurs();
         view.setListDatas(lecteurs);
+        // List<Lecteur> lecteurs = model.getLecteurs();
+        // view.setListDatas(lecteurs); //désactivé pour éviter appels imbriqués
     }
 
 
@@ -36,6 +43,8 @@ public class LecteurPresenter {
         else view.affMsg("lecteur non effacé");
         List<Lecteur> lecteurs = model.getLecteurs();
         view.setListDatas(lecteurs);
+        //List<Lecteur> lecteurs = model.getLecteurs();
+        //view.setListDatas(lecteurs); //désactivé pour éviter appels imbriqués
     }
 
     //Méthode màj à développer
@@ -45,5 +54,24 @@ public class LecteurPresenter {
         else view.affMsg("Erreur de màj");
         List<Lecteur> lecteurs = model.getLecteurs();
         view.setListDatas(lecteurs);
+        //view.setListDatas(model.getClients());//désactivé pour éviter appels imbriqués
+    }
+
+    public void search(int idLecteur){
+        Lecteur lec = model.readLecteur(idLecteur);
+        if(lec==null) view.affMsg("Recherche infructueuse ");
+        else view.affMsg(toString());
+    }
+
+    public void exemplairesEnLocation(Lecteur lec){
+        List<Exemplaire> lex = ((SpecialLecteur)model).exemplairesEnLocation(lec);
+        if(lex==null || lex.isEmpty()) view.affMsg("Aucun exemplaire trouvé ");
+        else view.affList(lex);
+    }
+
+    public void exemplairesLoues(Lecteur lec){
+        List<Exemplaire> lex = ((SpecialLecteur)model).exemplairesLoues(lec);
+        if(lex==null || lex.isEmpty()) view.affMsg("Aucun exemplaire trouvé ");
+        else view.affList(lex);
     }
 }
