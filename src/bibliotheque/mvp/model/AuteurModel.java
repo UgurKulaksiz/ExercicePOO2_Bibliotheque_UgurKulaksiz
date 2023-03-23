@@ -25,9 +25,10 @@ public class AuteurModel implements DAOAuteur{
     }
 
     @Override
-    public Auteur readAuteur(String nomAuteur) {
+    public Auteur readAuteur(String nomAuteur, String prenomAuteur, String nationalite) {
         for (Auteur aut : auteurs) {
-            if (aut.getNom() == nomAuteur) return aut;
+            if (aut.getNom().equals(nomAuteur) && aut.getPrenom().equals(prenomAuteur)
+                    && aut.getNationalite().equals(nationalite)) return aut;
         }
         return null;
     }

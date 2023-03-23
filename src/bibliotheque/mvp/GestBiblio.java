@@ -3,34 +3,58 @@ package bibliotheque.mvp;
 import bibliotheque.mvp.model.*;
 import bibliotheque.mvp.presenter.AuteurPresenter;
 import bibliotheque.mvp.presenter.LecteurPresenter;
-import bibliotheque.mvp.presenter.RayonPresenter;
 import bibliotheque.mvp.view.*;
+import bibliotheque.utilitaires.Utilitaire;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class GestBiblio {
-    public static void main(String[] args) {
-        DAOLecteur lectM = new LecteurModel();
+    /* LECTEUR */
+    private DAOLecteur lm;
+    private LecteurViewInterface lv;
+    private LecteurPresenter lp;
 
-        LecteurViewInterface lectV = new LecteurViewConsole();
+    /* AUTEUR */
+    private DAOAuteur mA;
+    private AuteurViewInterface vA;
+    private AuteurPresenter pA;
 
-        LecteurPresenter lectP = new LecteurPresenter(lectM, lectV); //Création et injection de dépendance
-        lectP.start();
 
 
+    public void gestion(){
+        /* LECTEUR */
+        lm = new LecteurModel();
+        lv = new LecteurViewConsole();
+        lp = new LecteurPresenter(lm, lv);//création et injection de dépendance
+
+        List<String> loptions = Arrays.asList("lecteurs","fin");
+        do {
+            int ch = Utilitaire.choixListe(loptions);
+            switch (ch){
+                case 1: lp.start();
+                    break;
+                case 2 : System.exit(0);
+            }
+        }while(true);
 
         /* AUTEUR */
-        DAOAuteur lectA = new AuteurModel();
+        mA = new AuteurModel();
+        vA = new AuteurViewConsole();
+        pA = new AuteurPresenter(mA, vA);//création et injection de dépendance
 
-        AuteurViewInterface lectVA = new AuteurViewConsole();
-
-        AuteurPresenter lectPA = new AuteurPresenter(lectA, lectVA);
-        lectPA.start();
-
-        /* RAYON */
-        DAORayon lectRay = new RayonModel();
-
-        RayonViewInterface lectVRay = new RayonViewConsole();
-
-        RayonPresenter leectPRay = new RayonPresenter(lectRay, lectVRay);
-        leectPRay.start();
+        List<String> loptionsAuteur = Arrays.asList("Auteurs","fin");
+        do {
+            int ch = Utilitaire.choixListe(loptionsAuteur);
+            switch (ch){
+                case 1: pA.start();
+                    break;
+                case 2 : System.exit(0);
+            }
+        }while(true);
+    }
+    public static void main(String[] args) {
+        GestBiblio gb = new GestBiblio();
+        gb.gestion();
     }
 }

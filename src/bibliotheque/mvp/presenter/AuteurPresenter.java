@@ -1,7 +1,8 @@
 package bibliotheque.mvp.presenter;
 
-import bibliotheque.metier.Auteur;
+import bibliotheque.metier.*;
 import bibliotheque.mvp.model.DAOAuteur;
+import bibliotheque.mvp.model.SpecialAuteur;
 import bibliotheque.mvp.view.AuteurViewInterface;
 
 import java.util.List;
@@ -19,6 +20,10 @@ public class AuteurPresenter {
     public void start() {
         List<Auteur> auteurs = model.getAuteurs();
         view.setListDatas(auteurs);
+    }
+
+    public List<Auteur> getAll(){
+        return model.getAuteurs();
     }
 
     public void addAuteur(Auteur auteur) {
@@ -45,5 +50,28 @@ public class AuteurPresenter {
         else view.affMsg("Erreur de màj");
         List<Auteur> auteurs = model.getAuteurs();
         view.setListDatas(auteurs);
+    }
+
+    public void search(String nom, String prenom, String nationalite){
+        Auteur aut = model.readAuteur(nom, prenom, nationalite);
+        if(aut==null) view.affMsg("Recherche infructueuse ");
+        else view.affMsg(toString());
+    }
+
+    public void listerOuvrages(){
+        List<Ouvrage> lOuvrage = ((SpecialAuteur)model).listerOuvrages();
+        if(lOuvrage==null || lOuvrage.isEmpty()) view.affMsg("Aucun ouvrage trouvé ");
+        else view.affList(lOuvrage);
+    }
+    public void listerOuvrages(TypeOuvrage to, TypeLivre tl){
+        List<Ouvrage> lOuvrage = ((SpecialAuteur)model).listerOuvrages(to, tl);
+        if(lOuvrage==null || lOuvrage.isEmpty()) view.affMsg("Aucun ouvrage trouvé ");
+        else view.affList(lOuvrage);
+    }
+
+    public void listerOuvrage(String genre){
+        List<Ouvrage> lOuvrage = ((SpecialAuteur)model).listerOuvrage(genre);
+        if(lOuvrage==null || lOuvrage.isEmpty()) view.affMsg("Aucun ouvrage trouvé ");
+        else view.affList(lOuvrage);
     }
 }

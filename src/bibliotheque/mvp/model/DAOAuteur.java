@@ -12,7 +12,7 @@ public interface DAOAuteur {
 
     Auteur updateAuteur(Auteur aut);
 
-    Auteur readAuteur(String nomAuteur);
+    Auteur readAuteur(String nomAuteur, String prenomAuteur, String nationaliteAuteur);
 
     List<Auteur> getAuteurs();
 }
