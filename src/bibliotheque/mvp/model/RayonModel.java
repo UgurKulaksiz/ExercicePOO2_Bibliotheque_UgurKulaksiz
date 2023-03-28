@@ -1,5 +1,7 @@
 package bibliotheque.mvp.model;
 
+import bibliotheque.metier.Exemplaire;
+import bibliotheque.metier.Lecteur;
 import bibliotheque.metier.Rayon;
 
 import java.util.ArrayList;
@@ -22,6 +24,14 @@ public class RayonModel implements DAORayon{
     @Override
     public boolean removeRayon(Rayon ray) {
         return rayons.remove(ray);
+    }
+
+    @Override
+    public Rayon readRayon(String code) {
+        for (Rayon ray : rayons) {
+            if (ray.getCodeRayon().equals(code)) return ray;
+        }
+        return null;
     }
 
     @Override

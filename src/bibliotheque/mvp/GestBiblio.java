@@ -3,6 +3,7 @@ package bibliotheque.mvp;
 import bibliotheque.mvp.model.*;
 import bibliotheque.mvp.presenter.AuteurPresenter;
 import bibliotheque.mvp.presenter.LecteurPresenter;
+import bibliotheque.mvp.presenter.RayonPresenter;
 import bibliotheque.mvp.view.*;
 import bibliotheque.utilitaires.Utilitaire;
 
@@ -19,6 +20,11 @@ public class GestBiblio {
     private DAOAuteur mA;
     private AuteurViewInterface vA;
     private AuteurPresenter pA;
+
+    /* RAYONS */
+    private DAORayon mR;
+    private RayonViewInterface vR;
+    private RayonPresenter pR;
 
 
 
@@ -48,6 +54,21 @@ public class GestBiblio {
             int ch = Utilitaire.choixListe(loptionsAuteur);
             switch (ch){
                 case 1: pA.start();
+                    break;
+                case 2 : System.exit(0);
+            }
+        }while(true);
+
+        /* RAYONS */
+        mR = new RayonModel();
+        vR = new RayonViewConsole();
+        pR = new RayonPresenter(mR, vR);//création et injection de dépendance
+
+        List<String> loptionsRayon = Arrays.asList("Rayons","fin");
+        do {
+            int ch = Utilitaire.choixListe(loptionsRayon);
+            switch (ch){
+                case 1: pR.start();
                     break;
                 case 2 : System.exit(0);
             }

@@ -12,5 +12,7 @@ public interface DAORayon {
 
     Rayon updateRayon(Rayon ray);
 
+    Rayon readRayon(String code);
+
     List<Rayon> getRayons();
 }

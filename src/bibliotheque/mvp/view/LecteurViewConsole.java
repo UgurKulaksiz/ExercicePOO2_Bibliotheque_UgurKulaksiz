@@ -149,6 +149,5 @@ public class LecteurViewConsole implements LecteurViewInterface {
             }
         } while (true);
 
-
     }
 }

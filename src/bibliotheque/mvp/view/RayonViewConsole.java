@@ -1,16 +1,17 @@
 package bibliotheque.mvp.view;
 
-import bibliotheque.metier.Lecteur;
+import bibliotheque.metier.Exemplaire;
 import bibliotheque.metier.Rayon;
-import bibliotheque.mvp.presenter.LecteurPresenter;
 import bibliotheque.mvp.presenter.RayonPresenter;
 import bibliotheque.utilitaires.Utilitaire;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+
+import static bibliotheque.utilitaires.Utilitaire.*;
+import static bibliotheque.utilitaires.Utilitaire.modifyIfNotBlank;
 
 public class RayonViewConsole implements RayonViewInterface{
     private RayonPresenter presenter;
@@ -37,8 +38,13 @@ public class RayonViewConsole implements RayonViewInterface{
         System.out.println("Information : " + msg);
     }
 
+    @Override
+    public void affList(List<Rayon> ray) {
+        affListe(ray);
+    }
+
     public void menu() {
-        List options = new ArrayList<>(Arrays.asList("Ajouter", "Retirer", "Modifier", "Fin"));
+        List options = new ArrayList<>(Arrays.asList("Ajouter", "Retirer", "Modifier", "Spécial", "Fin"));
         do {
             int ch = Utilitaire.choixListe(options);
 
@@ -53,43 +59,31 @@ public class RayonViewConsole implements RayonViewInterface{
                     modifier();
                     break;
                 case 4:
+                    special();
+                    break;
+                case 5:
                     System.exit(0);
             }
         } while (true);
+    }
+
+    private void rechercher(){
+        System.out.println("Code rayon : ");
+        String code = sc.nextLine();
+        presenter.search(code);
     }
 
     private void modifier() {
-        //TODO choisir elt et demander les nouvelles valeurs puis appeler méthode maj(rayon) (à développer) du presenter
 
-        System.out.println(lRayon);
-        Utilitaire.affListe(lRayon);
-        int choix = Utilitaire.choixElt(lRayon);
-        Rayon rayon = lRayon.get(choix - 1);
+        int choix = choixElt(lRayon);
+        Rayon ray = lRayon.get(choix-1);
+        String codeRayon = modifyIfNotBlank("Code rayon",ray.getCodeRayon());
+        String genre = modifyIfNotBlank("Genre",ray.getGenre());
+
+        Rayon rayon = new Rayon(codeRayon, genre);
         presenter.updateRayon(rayon);
-        choixModif(rayon);
-    }
-
-    private void choixModif(Rayon ray) {
-        List options = new ArrayList<>(Arrays.asList("Code rayon", "Genre"));
-
-        do {
-            int choix = Utilitaire.choixListe(options);
-            switch (choix) {
-                case 1:
-                    System.out.println("Code : ");
-                    String codeR = sc.nextLine();
-                    ray.setCodeRayon(codeR);
-                    break;
-                case 2:
-                    System.out.println("Genre : ");
-                    String genre = sc.nextLine();
-                    ray.setGenre(genre);
-                    break;
-                case 3:
-                    System.exit(0);
-            }
-        } while (true);
-
+        lRayon=presenter.getAll();//rafraichissement
+        Utilitaire.affListe(lRayon);
     }
 
     private void retirer() {
@@ -108,4 +102,7 @@ public class RayonViewConsole implements RayonViewInterface{
         Rayon ray = new Rayon(code, genre);
         presenter.addRayon(ray);
     }
+
+    //Méthode special()
+
 }

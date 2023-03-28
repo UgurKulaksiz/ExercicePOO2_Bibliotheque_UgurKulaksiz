@@ -1,6 +1,7 @@
 package bibliotheque.mvp.presenter;
 
 import bibliotheque.metier.Auteur;
+import bibliotheque.metier.Lecteur;
 import bibliotheque.metier.Rayon;
 import bibliotheque.mvp.model.DAOAuteur;
 import bibliotheque.mvp.model.DAORayon;
@@ -22,6 +23,10 @@ public class RayonPresenter {
     public void start() {
         List<Rayon> rayons = model.getRayons();
         view.setListDatas(rayons);
+    }
+
+    public List<Rayon> getAll(){
+        return model.getRayons();
     }
 
     public void addRayon(Rayon rayon) {
@@ -48,5 +53,11 @@ public class RayonPresenter {
         else view.affMsg("Erreur de màj");
         List<Rayon> rayons = model.getRayons();
         view.setListDatas(rayons);
+    }
+
+    public void search(String code){
+        Rayon ray = model.readRayon(code);
+        if(ray==null) view.affMsg("Recherche infructueuse ");
+        else view.affMsg(toString());
     }
 }
