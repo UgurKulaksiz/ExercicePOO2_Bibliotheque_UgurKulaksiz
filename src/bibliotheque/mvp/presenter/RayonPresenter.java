@@ -1,10 +1,10 @@
 package bibliotheque.mvp.presenter;
 
-import bibliotheque.metier.Auteur;
-import bibliotheque.metier.Lecteur;
-import bibliotheque.metier.Rayon;
+import bibliotheque.metier.*;
 import bibliotheque.mvp.model.DAOAuteur;
 import bibliotheque.mvp.model.DAORayon;
+import bibliotheque.mvp.model.SpecialAuteur;
+import bibliotheque.mvp.model.SpecialRayon;
 import bibliotheque.mvp.view.AuteurViewInterface;
 import bibliotheque.mvp.view.RayonViewInterface;
 
@@ -59,5 +59,11 @@ public class RayonPresenter {
         Rayon ray = model.readRayon(code);
         if(ray==null) view.affMsg("Recherche infructueuse ");
         else view.affMsg(toString());
+    }
+
+    public void listerExemplaires(){
+        List<Exemplaire> lExemplaire = ((SpecialRayon)model).listerExemplaires();
+        if(lExemplaire==null || lExemplaire.isEmpty()) view.affMsg("Aucun exemplaire trouvé ");
+        else view.affList(lExemplaire);
     }
 }

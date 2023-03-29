@@ -13,5 +13,5 @@ public interface RayonViewInterface {
 
     public void affMsg(String msg);
 
-    void affList(List<Rayon> rayons);
+    void affList(List<Exemplaire> exemplaires);
 }

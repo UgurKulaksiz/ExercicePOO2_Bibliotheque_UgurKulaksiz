@@ -3,6 +3,7 @@ package bibliotheque.mvp;
 import bibliotheque.mvp.model.*;
 import bibliotheque.mvp.presenter.AuteurPresenter;
 import bibliotheque.mvp.presenter.LecteurPresenter;
+import bibliotheque.mvp.presenter.OuvragePresenter;
 import bibliotheque.mvp.presenter.RayonPresenter;
 import bibliotheque.mvp.view.*;
 import bibliotheque.utilitaires.Utilitaire;
@@ -26,6 +27,11 @@ public class GestBiblio {
     private RayonViewInterface vR;
     private RayonPresenter pR;
 
+    /* OUVRAGES */
+    private DAOOuvrage mO;
+    private OuvrageViewInterface vO;
+    private OuvragePresenter pO;
+
 
 
     public void gestion(){
@@ -34,45 +40,37 @@ public class GestBiblio {
         lv = new LecteurViewConsole();
         lp = new LecteurPresenter(lm, lv);//création et injection de dépendance
 
-        List<String> loptions = Arrays.asList("lecteurs","fin");
-        do {
-            int ch = Utilitaire.choixListe(loptions);
-            switch (ch){
-                case 1: lp.start();
-                    break;
-                case 2 : System.exit(0);
-            }
-        }while(true);
-
         /* AUTEUR */
         mA = new AuteurModel();
         vA = new AuteurViewConsole();
         pA = new AuteurPresenter(mA, vA);//création et injection de dépendance
-
-        List<String> loptionsAuteur = Arrays.asList("Auteurs","fin");
-        do {
-            int ch = Utilitaire.choixListe(loptionsAuteur);
-            switch (ch){
-                case 1: pA.start();
-                    break;
-                case 2 : System.exit(0);
-            }
-        }while(true);
 
         /* RAYONS */
         mR = new RayonModel();
         vR = new RayonViewConsole();
         pR = new RayonPresenter(mR, vR);//création et injection de dépendance
 
-        List<String> loptionsRayon = Arrays.asList("Rayons","fin");
+        /* OUVRAGES */
+        mO = new OuvrageModel();
+        vO = new OuvrageViewConsole();
+        pO = new OuvragePresenter(mO, vO);//création et injection de dépendance
+
+        List<String> loptions = Arrays.asList("Lecteurs", "Auteurs", "Rayons", "Ouvrages", "Fin");
         do {
-            int ch = Utilitaire.choixListe(loptionsRayon);
+            int ch = Utilitaire.choixListe(loptions);
             switch (ch){
-                case 1: pR.start();
+                case 1: lp.start();
                     break;
-                case 2 : System.exit(0);
+                case 2: pA.start();
+                    break;
+                case 3: pR.start();
+                    break;
+                case 4: pO.start();
+                    break;
+                case 5 : System.exit(0);
             }
         }while(true);
+
     }
     public static void main(String[] args) {
         GestBiblio gb = new GestBiblio();
