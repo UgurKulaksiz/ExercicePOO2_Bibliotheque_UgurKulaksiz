@@ -10,6 +10,9 @@ public class Rayon {
     private List<Exemplaire> lex = new ArrayList<>();
 
     public Rayon(String codeRayon, String genre) {
+        if(codeRayon.isEmpty() || genre.isEmpty()) {
+            throw new IllegalArgumentException("Les valeurs passées en paramètre ne sont pas valides.");
+        }
         this.codeRayon = codeRayon;
         this.genre = genre;
     }

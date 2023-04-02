@@ -19,7 +19,7 @@ public class Gestion {
     private static List<Location> lloc = new ArrayList<>();
 
 
-    public void populate() {
+    public void populate() throws Exception {
         Auteur a = new Auteur("Verne", "Jules", "France");
         laut.add(a);
 
@@ -165,49 +165,67 @@ public class Gestion {
     }
 
     private void gestLecteurs() {
-        System.out.println("numéro");
-        int num = sc.nextInt();
-        sc.skip("\n");
-        System.out.println("nom ");
-        String nom = sc.nextLine();
-        System.out.println("prénom ");
-        String prenom = sc.nextLine();
-        System.out.println("date de naissance");
-        String[] jma = sc.nextLine().split(" "); //Diviser les variables(jour, mois et année) par un espace (" ")
-        int j = Integer.parseInt(jma[0]);
-        int m = Integer.parseInt(jma[1]);
-        int a = Integer.parseInt(jma[2]);
-        LocalDate dn = LocalDate.of(a, m, j); //Transformer les variables(jour, mois et année) sous forme de date
-        System.out.println("adresse");
-        String adr = sc.nextLine();
-        System.out.println("mail");
-        String mail = sc.nextLine();
-        System.out.println("tel ");
-        String tel = sc.nextLine();
-        Lecteur lect = new Lecteur(num, nom, prenom, dn, adr, mail, tel); //Création du lecteur
-        llect.add(lect); //Ajout du lecteur créé dans la liste lecteur
-        System.out.println("Lecteur créé");
+        try {
+            System.out.println("numéro");
+            int num = sc.nextInt();
+            sc.skip("\n");
+            System.out.println("nom ");
+            String nom = sc.nextLine();
+            System.out.println("prénom ");
+            String prenom = sc.nextLine();
+            System.out.println("date de naissance");
+            String[] jma = sc.nextLine().split(" "); //Diviser les variables(jour, mois et année) par un espace (" ")
+            int j = Integer.parseInt(jma[0]);
+            int m = Integer.parseInt(jma[1]);
+            int a = Integer.parseInt(jma[2]);
+            LocalDate dn = LocalDate.of(a, m, j); //Transformer les variables(jour, mois et année) sous forme de date
+            System.out.println("adresse");
+            String adr = sc.nextLine();
+            System.out.println("mail");
+            String mail = sc.nextLine();
+            System.out.println("tel ");
+            String tel = sc.nextLine();
+            Lecteur lect = new Lecteur(num, nom, prenom, dn, adr, mail, tel); //Création du lecteur
+            llect.add(lect); //Ajout du lecteur créé dans la liste lecteur
+            System.out.println("Lecteur créé");
+
+        } catch (Exception e) {
+            System.out.println("Erreur : " + e.getMessage());
+        }
+
     }
 
     private void gestRayons() {
-        System.out.println("code ");
-        String code = sc.next();
-        System.out.println("genre ");
-        String genre = sc.next();
-        Rayon r = new Rayon(code, genre);
-        System.out.println("Rayon créé");
-
-        //TODO attribuer exemplaire, les exemplaires sont triés par ordre de titre de l'ouvrage , empêcher doublons sur l'exemplaire
-
-        System.out.println("Combien d'exemplaires voulez-vous ajouter au rayon ?");
-        int nbExemplaires = sc.nextInt();
-
-        Exemplaire e = null;
-        for (int i = 0; i < nbExemplaires; i++) {
-            System.out.println("Création d'un nouvel exemplaire pour le rayon " + code + " - " + genre);
-            gestExemplaires();
-            r.addExemplaire(e);
+        try {
+            System.out.println("code ");
+            String code = sc.next();
+            System.out.println("genre ");
+            String genre = sc.next();
+            Rayon r = new Rayon(code, genre);
+            System.out.println("Rayon créé");
+        } catch (Exception e) {
+            System.out.println("Erreur : " + e.getMessage());
         }
+
+
+        try {
+            //TODO attribuer exemplaire, les exemplaires sont triés par ordre de titre de l'ouvrage , empêcher doublons sur l'exemplaire
+
+            System.out.println("Combien d'exemplaires voulez-vous ajouter au rayon ?");
+            int nbExemplaires = sc.nextInt();
+
+            Exemplaire e = null;
+            /*
+            for (int i = 0; i < nbExemplaires; i++) {
+                System.out.println("Création d'un nouvel exemplaire pour le rayon " + code + " - " + genre);
+                gestExemplaires();
+                r.addExemplaire(e);
+            }
+             */
+        } catch (Exception e) {
+            System.out.println("Erreur : " + e.getMessage());
+        }
+
 
         Collections.sort(lex, new Comparator<Exemplaire>() {
             @Override
@@ -220,32 +238,47 @@ public class Gestion {
     }
 
     private void gestExemplaires() {
-        System.out.println("matricule ");
-        String mat = sc.next();
-        System.out.println("etat  ");
-        String etat = sc.next();
-        System.out.println("ouvrage ");
-        for (int i = 0; i < louv.size(); i++) {
-            System.out.println((i + 1 + "." + louv.get(i)));
-        }
-        int choix;
-        do {
-            System.out.println("choix :");
-            choix = sc.nextInt();
-            sc.skip("\n");
-        } while (choix < 1 || choix > louv.size());
-        Exemplaire ex = new Exemplaire(mat, etat, louv.get(choix - 1)); //Création de l'exemplaire avec la matricule, l'état et le choix du type d l'ouvrage
-        lex.add(ex); //Ajout de l'exemplaire créé à la liste d'exemplaire
-        System.out.println("Exemplaire créé");
+        try {
+            System.out.println("matricule ");
+            String mat = sc.next();
+            System.out.println("etat  ");
+            String etat = sc.next();
+            System.out.println("ouvrage ");
+            for (int i = 0; i < louv.size(); i++) {
+                System.out.println((i + 1 + "." + louv.get(i)));
+            }
+            int choix;
+            do {
+                System.out.println("choix :");
+                choix = sc.nextInt();
+                sc.skip("\n");
+            } while (choix < 1 || choix > louv.size());
+            Exemplaire ex = new Exemplaire(mat, etat, louv.get(choix - 1)); //Création de l'exemplaire avec la matricule, l'état et le choix du type d l'ouvrage
+            lex.add(ex); //Ajout de l'exemplaire créé à la liste d'exemplaire
+            System.out.println("Exemplaire créé");
 
-        //TODO attribuer rayon , les rayons sont triès par ordre de code
-
-        System.out.println("Création d'un rayon pour l'exemplaire " + ex + " : ");
-        List<Rayon> listeRayon = new ArrayList<>();
-        for (Rayon r : lrayon) {
-            gestRayons();
-            r.addExemplaire(ex);
+        } catch (Exception e) {
+            System.out.println("Erreur : " + e.getMessage());
         }
+
+
+        try {
+            //TODO attribuer rayon , les rayons sont triès par ordre de code
+
+            /*
+            System.out.println("Création d'un rayon pour l'exemplaire " + ex + " : ");
+            List<Rayon> listeRayon = new ArrayList<>();
+            for (Rayon r : lrayon) {
+                gestRayons();
+                r.addExemplaire(ex);
+            }
+
+             */
+
+        } catch (Exception e) {
+            System.out.println("Erreur : " + e.getMessage());
+        }
+
         Collections.sort(lrayon, new Comparator<Rayon>() {
             @Override
             public int compare(Rayon rayon1, Rayon rayon2) {
@@ -326,11 +359,12 @@ public class Gestion {
             }
             */
 
-        TypeOuvrage[] to = TypeOuvrage.values();
-        List<TypeOuvrage> lTO = new ArrayList<>(Arrays.asList(to));
-        int choix;
-        choix = Utilitaire.choixListe(lTO);
-        Ouvrage ouvrage = null;
+        try {
+            TypeOuvrage[] to = TypeOuvrage.values();
+            List<TypeOuvrage> lTO = new ArrayList<>(Arrays.asList(to));
+            int choix;
+            choix = Utilitaire.choixListe(lTO);
+            Ouvrage ouvrage = null;
 
         /*
         switch (choix){
@@ -343,19 +377,32 @@ public class Gestion {
         }
          */
 
-        List<OuvrageFactory> lof = new ArrayList<>(Arrays.asList(new LivreFactory(), new CDFactory(), new DVDFactory()));
-        ouvrage = lof.get(choix - 1).create();
-        louv.add(ouvrage);
-        System.out.println("Ouvrage créé");
+            List<OuvrageFactory> lof = new ArrayList<>(Arrays.asList(new LivreFactory(), new CDFactory(), new DVDFactory()));
+            ouvrage = lof.get(choix - 1).create();
+            louv.add(ouvrage);
+            System.out.println("Ouvrage créé");
 
-        //TODO attribuer auteurs, les auteur sont triés par odre de nom et prénom, empêcher doublons
-
-        System.out.println("Création d'un auteur ");
-        List<Auteur> listeAuteur = new ArrayList<>();
-        for (Auteur auteur : laut) {
-            gestAuteurs();
-            auteur.addOuvrage(ouvrage);
+        } catch (Exception e) {
+            System.out.println("Erreur : " + e.getMessage());
         }
+
+        /*
+        try {
+            //TODO attribuer auteurs, les auteur sont triés par odre de nom et prénom, empêcher doublons
+
+            System.out.println("Création d'un auteur ");
+            List<Auteur> listeAuteur = new ArrayList<>();
+            for (Auteur auteur : laut) {
+                gestAuteurs();
+                auteur.addOuvrage(ouvrage);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erreur : " + e.getMessage());
+        }
+
+             */
+
         Collections.sort(laut, new Comparator<Auteur>() {
             @Override
             public int compare(Auteur auteur1, Auteur auteur2) {
@@ -378,24 +425,37 @@ public class Gestion {
     }
 
     private void gestAuteurs() {
-        System.out.println("nom ");
-        String nom = sc.nextLine();
-        System.out.println("prénom ");
-        String prenom = sc.nextLine();
-        System.out.println("nationalité");
-        String nat = sc.nextLine();
-        Auteur a = new Auteur(nom, prenom, nat);
-        laut.add(a);
-        System.out.println("Écrivain créé");
+        try {
+            System.out.println("nom ");
+            String nom = sc.nextLine();
+            System.out.println("prénom ");
+            String prenom = sc.nextLine();
+            System.out.println("nationalité");
+            String nat = sc.nextLine();
+            Auteur a = new Auteur(nom, prenom, nat);
+            laut.add(a);
+            System.out.println("Écrivain créé");
 
-        //TODO attribuer ouvrages , les ouvrages sont triés par ordre de titre
-
-        System.out.println("Création d'un ouvrage ");
-        List<Ouvrage> listeOuvrage = new ArrayList<>();
-        for (Ouvrage ouvrage : louv) {
-            gestOuvrages();
-            ouvrage.addAuteur(a);
+        } catch (Exception e) {
+            System.out.println("Erreur : " + e.getMessage());
         }
+
+        /*
+        try {
+            //TODO attribuer ouvrages , les ouvrages sont triés par ordre de titre
+
+            System.out.println("Création d'un ouvrage ");
+            List<Ouvrage> listeOuvrage = new ArrayList<>();
+            for (Ouvrage ouvrage : louv) {
+                gestOuvrages();
+                ouvrage.addAuteur(a);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erreur : " + e.getMessage());
+        }
+
+         */
         Collections.sort(louv, new Comparator<Ouvrage>() {
             @Override
             public int compare(Ouvrage ouvrage1, Ouvrage ouvrage2) {
@@ -408,7 +468,7 @@ public class Gestion {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Gestion g = new Gestion();
         g.populate();
         g.menu();

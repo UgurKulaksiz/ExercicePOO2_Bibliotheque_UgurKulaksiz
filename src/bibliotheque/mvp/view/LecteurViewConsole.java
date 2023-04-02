@@ -72,61 +72,83 @@ public class LecteurViewConsole implements LecteurViewInterface {
     }
 
     private void rechercher() {
-        System.out.println("numLecteur : ");
-        int idLecteur = sc.nextInt();
-        presenter.search(idLecteur);
+        try{
+            System.out.println("numLecteur : ");
+            int idLecteur = sc.nextInt();
+            presenter.search(idLecteur);
+        }catch (Exception e){
+            System.out.println("Erreur : "+e.getMessage());
+        }
+
     }
 
-    private void modifier() {
-        int choix = choixElt(llec);
-        Lecteur l = llec.get(choix-1);
-        String nom = modifyIfNotBlank("nom",l.getNom());
-        String prenom = modifyIfNotBlank("prénom",l.getPrenom());
-        String date = modifyIfNotBlank("date de naissance",getDateFrench(l.getDn()));
-        String[] jma = date.split(" ");
-        int j = Integer.parseInt(jma[0]);
-        int m = Integer.parseInt(jma[1]);
-        int a = Integer.parseInt(jma[2]);
-        LocalDate dn = LocalDate.of(a, m, j);
-        String adr = modifyIfNotBlank("adresse",l.getAdresse());
-        String mail= modifyIfNotBlank("mail",l.getMail());
-        String tel =modifyIfNotBlank("tel",l.getTel());
-        Lecteur lec = new Lecteur(l.getNumlecteur(), nom, prenom, dn, adr, mail, tel);
-        presenter.updateLecteur(lec);
-        llec=presenter.getAll();//rafraichissement
-        Utilitaire.affListe(llec);
+    private void modifier(){
+        try{
+            int choix = choixElt(llec);
+            Lecteur l = llec.get(choix-1);
+            String nom = modifyIfNotBlank("nom",l.getNom());
+            String prenom = modifyIfNotBlank("prénom",l.getPrenom());
+            String date = modifyIfNotBlank("date de naissance",getDateFrench(l.getDn()));
+            String[] jma = date.split(" ");
+            int j = Integer.parseInt(jma[0]);
+            int m = Integer.parseInt(jma[1]);
+            int a = Integer.parseInt(jma[2]);
+            LocalDate dn = LocalDate.of(a, m, j);
+            String adr = modifyIfNotBlank("adresse",l.getAdresse());
+            String mail= modifyIfNotBlank("mail",l.getMail());
+            String tel =modifyIfNotBlank("tel",l.getTel());
+            Lecteur lec = new Lecteur(l.getNumlecteur(), nom, prenom, dn, adr, mail, tel);
+            presenter.updateLecteur(lec);
+            llec=presenter.getAll();//rafraichissement
+            Utilitaire.affListe(llec);
+        }catch (Exception e){
+            System.out.println("Erreur : "+e.getMessage());
+        }
+
     }
 
     private void retirer() {
-        int choix = choixElt(llec);
-        Lecteur lecteur = llec.get(choix-1);
-        presenter.removeLecteur(lecteur);
-        llec=presenter.getAll();//rafraichissement
-        Utilitaire.affListe(llec);
+        try{
+            int choix = choixElt(llec);
+            Lecteur lecteur = llec.get(choix-1);
+            presenter.removeLecteur(lecteur);
+            llec=presenter.getAll();//rafraichissement
+            Utilitaire.affListe(llec);
+
+        } catch (Exception e){
+            System.out.println("Erreur : "+e.getMessage());
+        }
+
     }
 
 
     private void ajouter() {
-        System.out.println("nom ");
-        String nom = sc.nextLine();
-        System.out.println("prénom ");
-        String prenom = sc.nextLine();
-        System.out.println("date de naissance");
-        String[] jma = sc.nextLine().split(" ");
-        int j = Integer.parseInt(jma[0]);
-        int m = Integer.parseInt(jma[1]);
-        int a = Integer.parseInt(jma[2]);
-        LocalDate dn = LocalDate.of(a, m, j);
-        System.out.println("adresse");
-        String adr = sc.nextLine();
-        System.out.println("mail");
-        String mail = sc.nextLine();
-        System.out.println("tel ");
-        String tel = sc.nextLine();
-        Lecteur lec = new Lecteur(0, nom, prenom, dn, adr, mail, tel);
-        presenter.addLecteur(lec);
-        llec=presenter.getAll();//rafraichissement
-        Utilitaire.affListe(llec);
+        try {
+            System.out.println("nom ");
+            String nom = sc.nextLine();
+            System.out.println("prénom ");
+            String prenom = sc.nextLine();
+            System.out.println("date de naissance");
+            String[] jma = sc.nextLine().split(" ");
+            int j = Integer.parseInt(jma[0]);
+            int m = Integer.parseInt(jma[1]);
+            int a = Integer.parseInt(jma[2]);
+            LocalDate dn = LocalDate.of(a, m, j);
+            System.out.println("adresse");
+            String adr = sc.nextLine();
+            System.out.println("mail");
+            String mail = sc.nextLine();
+            System.out.println("tel ");
+            String tel = sc.nextLine();
+            Lecteur lec = new Lecteur(0, nom, prenom, dn, adr, mail, tel);
+            presenter.addLecteur(lec);
+            llec=presenter.getAll();//rafraichissement
+            Utilitaire.affListe(llec);
+
+        }catch (Exception e){
+            System.out.println("Erreur : "+e.getMessage());
+        }
+
     }
     private void special() {
         int choix =  choixElt(llec);

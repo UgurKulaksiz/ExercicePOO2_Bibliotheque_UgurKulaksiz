@@ -22,13 +22,13 @@ public class LecteurPresenter {
         view.setListDatas(getAll());
     }
 
-    public List<Lecteur> getAll(){
+    public List<Lecteur> getAll() {
         return model.getLecteurs();
     }
 
     public void addLecteur(Lecteur lecteur) {
         Lecteur lec = model.addLecteur(lecteur);
-        if(lec!=null) view.affMsg("création de :"+lec);
+        if (lec != null) view.affMsg("création de :" + lec);
         else view.affMsg("erreur de création");
         List<Lecteur> lecteurs = model.getLecteurs();
         view.setListDatas(lecteurs);
@@ -39,7 +39,7 @@ public class LecteurPresenter {
 
     public void removeLecteur(Lecteur lecteur) {
         boolean ok = model.removeLecteur(lecteur);
-        if(ok) view.affMsg("lecteur effacé");
+        if (ok) view.affMsg("lecteur effacé");
         else view.affMsg("lecteur non effacé");
         List<Lecteur> lecteurs = model.getLecteurs();
         view.setListDatas(lecteurs);
@@ -48,30 +48,30 @@ public class LecteurPresenter {
     }
 
     //Méthode màj à développer
-    public void updateLecteur(Lecteur lec){
+    public void updateLecteur(Lecteur lec) {
         Lecteur lLecteur = model.updateLecteur(lec);
-        if(lLecteur!=null) view.affMsg("Mise à jour de :"+lLecteur);
+        if (lLecteur != null) view.affMsg("Mise à jour de :" + lLecteur);
         else view.affMsg("Erreur de màj");
         List<Lecteur> lecteurs = model.getLecteurs();
         view.setListDatas(lecteurs);
         //view.setListDatas(model.getClients());//désactivé pour éviter appels imbriqués
     }
 
-    public void search(int idLecteur){
+    public void search(int idLecteur) {
         Lecteur lec = model.readLecteur(idLecteur);
-        if(lec==null) view.affMsg("Recherche infructueuse ");
+        if (lec == null) view.affMsg("Recherche infructueuse ");
         else view.affMsg(toString());
     }
 
-    public void exemplairesEnLocation(Lecteur lec){
-        List<Exemplaire> lex = ((SpecialLecteur)model).exemplairesEnLocation(lec);
-        if(lex==null || lex.isEmpty()) view.affMsg("Aucun exemplaire trouvé ");
+    public void exemplairesEnLocation(Lecteur lec) {
+        List<Exemplaire> lex = ((SpecialLecteur) model).exemplairesEnLocation(lec);
+        if (lex == null || lex.isEmpty()) view.affMsg("Aucun exemplaire trouvé ");
         else view.affList(lex);
     }
 
-    public void exemplairesLoues(Lecteur lec){
-        List<Exemplaire> lex = ((SpecialLecteur)model).exemplairesLoues(lec);
-        if(lex==null || lex.isEmpty()) view.affMsg("Aucun exemplaire trouvé ");
+    public void exemplairesLoues(Lecteur lec) {
+        List<Exemplaire> lex = ((SpecialLecteur) model).exemplairesLoues(lec);
+        if (lex == null || lex.isEmpty()) view.affMsg("Aucun exemplaire trouvé ");
         else view.affList(lex);
     }
 }

@@ -11,6 +11,10 @@ public class CD extends Ouvrage{
 
     public CD(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre, long code, byte nbrePlages, LocalTime dureeTotale) {
         super(titre, ageMin, dateParution, TypeOuvrage.CD, prixLocation, langue, genre);
+
+        if(code <= 0 || nbrePlages <= 0 || dureeTotale == null) {
+            throw new IllegalArgumentException("Les valeurs passées en paramètre ne sont pas valides.");
+        }
         this.code=code;
         this.nbrePlages=nbrePlages;
         this.dureeTotale=dureeTotale;

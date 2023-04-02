@@ -18,7 +18,7 @@ public class GestBiblio {
     private LecteurPresenter lp;
 
     /* AUTEUR */
-    private DAOAuteur mA;
+    private AuteurModel mA;
     private AuteurViewInterface vA;
     private AuteurPresenter pA;
 
@@ -33,8 +33,7 @@ public class GestBiblio {
     private OuvragePresenter pO;
 
 
-
-    public void gestion(){
+    public void gestion() throws Exception {
         /* LECTEUR */
         lm = new LecteurModel();
         lv = new LecteurViewConsole();
@@ -58,21 +57,28 @@ public class GestBiblio {
         List<String> loptions = Arrays.asList("Lecteurs", "Auteurs", "Rayons", "Ouvrages", "Fin");
         do {
             int ch = Utilitaire.choixListe(loptions);
-            switch (ch){
-                case 1: lp.start();
+            switch (ch) {
+                case 1:
+                    lp.start();
                     break;
-                case 2: pA.start();
+                case 2:
+                    pA.start();
                     break;
-                case 3: pR.start();
+                case 3:
+                    pR.start();
                     break;
-                case 4: pO.start();
+                case 4:
+                    pO.start();
                     break;
-                case 5 : System.exit(0);
+                case 5:
+                    System.exit(0);
             }
-        }while(true);
+
+        } while (true);
 
     }
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws Exception {
         GestBiblio gb = new GestBiblio();
         gb.gestion();
     }

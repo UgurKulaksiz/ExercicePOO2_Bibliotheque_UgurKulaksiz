@@ -26,7 +26,7 @@ public class AuteurViewConsole implements AuteurViewInterface {
     }
 
     @Override
-    public void setListDatas(List<Auteur> auteurs) {
+    public void setListDatas(List<Auteur> auteurs) throws Exception {
         this.lAuteur = auteurs;
         Utilitaire.affListe(lAuteur);
         menu();
@@ -42,7 +42,7 @@ public class AuteurViewConsole implements AuteurViewInterface {
         affListe(lOuvrage);
     }
 
-    public void menu() {
+    public void menu() throws Exception {
         List options = new ArrayList<>(Arrays.asList("Ajouter", "Retirer", "Rechercher", "Modifier", "Spécial", "Fin"));
         do {
             int ch = Utilitaire.choixListe(options);
@@ -70,16 +70,21 @@ public class AuteurViewConsole implements AuteurViewInterface {
     }
 
     private void rechercher() {
-        System.out.println("Nom : ");
-        String nom = sc.nextLine();
-        System.out.println("Prénom : ");
-        String prenom = sc.next();
-        System.out.println("Nationalité : ");
-        String nationalite = sc.nextLine();
-        presenter.search(nom, prenom, nationalite);
+        try{
+            System.out.println("Nom : ");
+            String nom = sc.nextLine();
+            System.out.println("Prénom : ");
+            String prenom = sc.next();
+            System.out.println("Nationalité : ");
+            String nationalite = sc.nextLine();
+            presenter.search(nom, prenom, nationalite);
+        }catch (Exception e){
+            System.out.println("Erreur : "+e.getMessage());
+        }
+
     }
 
-    private void modifier() {
+    private void modifier() throws Exception {
         int choix = choixElt(lAuteur);
         Auteur auteur = lAuteur.get(choix-1);
         String nom = modifyIfNotBlank("Nom",lAuteur.get(lAuteur.indexOf(auteur)).getNom());
@@ -92,7 +97,7 @@ public class AuteurViewConsole implements AuteurViewInterface {
         Utilitaire.affListe(lAuteur);
     }
 
-    private void retirer() {
+    private void retirer() throws Exception {
         int choix = choixElt(lAuteur);
         Auteur auteur = lAuteur.get(choix-1);
         presenter.removeAuteur(auteur);
@@ -102,15 +107,20 @@ public class AuteurViewConsole implements AuteurViewInterface {
 
 
     private void ajouter() {
-        System.out.println("Nom ");
-        String nom = sc.nextLine();
-        System.out.println("Prénom ");
-        String prenom = sc.nextLine();
-        System.out.println("Nationalité ");
-        String nationalite = sc.nextLine();
+        try{
+            System.out.println("Nom ");
+            String nom = sc.nextLine();
+            System.out.println("Prénom ");
+            String prenom = sc.nextLine();
+            System.out.println("Nationalité ");
+            String nationalite = sc.nextLine();
 
-        Auteur aut = new Auteur(nom, prenom, nationalite);
-        presenter.addAuteur(aut);
+            Auteur aut = new Auteur(nom, prenom, nationalite);
+            presenter.add(aut);
+        }catch (Exception e){
+            System.out.println("Erreur : "+e.getMessage());
+        }
+
     }
 
     private void special() {

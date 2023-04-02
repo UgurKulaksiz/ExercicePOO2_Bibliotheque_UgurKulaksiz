@@ -18,6 +18,9 @@ public abstract class Ouvrage {
 
 
     public Ouvrage(String titre, int ageMin, LocalDate dateParution, TypeOuvrage to, double prixLocation, String langue, String genre) {
+        if(titre.isEmpty() || ageMin <= 0 || dateParution == null || to == null || prixLocation <= 0 || langue.isEmpty() || genre.isEmpty()) {
+            throw new IllegalArgumentException("Les valeurs passées en paramètre ne sont pas valides.");
+        }
         this.titre = titre;
         this.ageMin = ageMin;
         this.dateParution = dateParution;

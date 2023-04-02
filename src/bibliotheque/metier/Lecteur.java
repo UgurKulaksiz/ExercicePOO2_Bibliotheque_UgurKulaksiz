@@ -5,15 +5,18 @@ import java.util.*;
 
 public class Lecteur {
     private int numlecteur;
-    private  String nom,prenom;
+    private String nom, prenom;
     private LocalDate dn;
     private String adresse;
     private String mail;
     private String tel;
 
-    private List<Location> lloc=new ArrayList<>();
+    private List<Location> lloc = new ArrayList<>();
 
     public Lecteur(int numlecteur, String nom, String prenom, LocalDate dn, String adresse, String mail, String tel) {
+        if(numlecteur <= 0 || nom.isEmpty() || prenom.isEmpty() || dn == null || adresse.isEmpty() || mail.isEmpty() || tel.isEmpty()) {
+            throw new IllegalArgumentException("Les valeurs passées en paramètre ne sont pas valides.");
+        }
         this.numlecteur = numlecteur;
         this.nom = nom;
         this.prenom = prenom;
@@ -113,23 +116,23 @@ public class Lecteur {
         return Objects.hash(numlecteur);
     }
 
-    public List<Exemplaire> listerExemplairesEnLocation(){
+    public List<Exemplaire> listerExemplairesEnLocation() {
         //OKTODO lister exemplaires en location lecteur
 
         List<Exemplaire> lex = new ArrayList<>();
-        for (Location location : lloc){
-            if(location.getDateRestitution() != null)
+        for (Location location : lloc) {
+            if (location.getDateRestitution() != null)
                 lex.add(location.getExemplaire());
         }
 
         return lex;
     }
 
-    public List<Exemplaire> listerExemplairesEnLoues(){
+    public List<Exemplaire> listerExemplairesEnLoues() {
         //OKTODO lister exemplaires loues lecteur
 
         List<Exemplaire> lex = new ArrayList<>();
-        for (Location location : lloc){
+        for (Location location : lloc) {
             lex.add(location.getExemplaire());
             //OKTODO empêcher doublon si exemplaire loué plusieurs fois par même lecteur
         }
@@ -137,9 +140,9 @@ public class Lecteur {
         return lex;
     }
 
-    public Set<Exemplaire> listerExemplairesLoues(){
+    public Set<Exemplaire> listerExemplairesLoues() {
         Set<Exemplaire> stex = new HashSet<>();
-        for(Location loc : lloc){
+        for (Location loc : lloc) {
             stex.add(loc.getExemplaire());
         }
         return stex;

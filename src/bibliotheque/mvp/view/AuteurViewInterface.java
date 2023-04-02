@@ -9,7 +9,7 @@ import java.util.List;
 public interface AuteurViewInterface {
     public void setPresenter(AuteurPresenter presenter);
 
-    public void setListDatas(List<Auteur> auteurs);
+    public void setListDatas(List<Auteur> auteurs) throws Exception;
 
     public void affMsg(String msg);
 

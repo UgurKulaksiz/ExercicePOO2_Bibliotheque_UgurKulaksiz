@@ -1,6 +1,7 @@
 package bibliotheque.mvp.presenter;
 
 import bibliotheque.metier.*;
+import bibliotheque.mvp.model.AuteurModel;
 import bibliotheque.mvp.model.DAOAuteur;
 import bibliotheque.mvp.model.SpecialAuteur;
 import bibliotheque.mvp.view.AuteurViewInterface;
@@ -17,7 +18,7 @@ public class AuteurPresenter {
         this.view.setPresenter(this);
     }
 
-    public void start() {
+    public void start() throws Exception {
         List<Auteur> auteurs = model.getAuteurs();
         view.setListDatas(auteurs);
     }
@@ -26,8 +27,8 @@ public class AuteurPresenter {
         return model.getAuteurs();
     }
 
-    public void addAuteur(Auteur auteur) {
-        Auteur aut = model.addAuteur(auteur);
+    public void add(Auteur auteur) throws Exception {
+        Auteur aut = model.add(auteur);
         if(auteur!=null) view.affMsg("Création de :"+aut);
         else view.affMsg("Erreur de création");
         List<Auteur> auteurs = model.getAuteurs();
@@ -35,8 +36,8 @@ public class AuteurPresenter {
     }
 
 
-    public void removeAuteur(Auteur auteur) {
-        boolean ok = model.removeAuteur(auteur);
+    public void removeAuteur(Auteur auteur) throws Exception {
+        boolean ok = model.remove(auteur);
         if(ok) view.affMsg("Auteur effacé");
         else view.affMsg("Auteur non effacé");
         List<Auteur> auteurs = model.getAuteurs();
@@ -44,16 +45,17 @@ public class AuteurPresenter {
     }
 
     //Méthode màj à développer
-    public void updateAuteur(Auteur aut){
-        Auteur lAuteur = model.updateAuteur(aut);
+    public void updateAuteur(Auteur aut) throws Exception {
+        Auteur lAuteur = model.update(aut);
         if(lAuteur!=null) view.affMsg("Mise à jour de :"+lAuteur);
         else view.affMsg("Erreur de màj");
         List<Auteur> auteurs = model.getAuteurs();
         view.setListDatas(auteurs);
     }
 
-    public void search(String nom, String prenom, String nationalite){
-        Auteur aut = model.readAuteur(nom, prenom, nationalite);
+    public void search(String nom, String prenom, String nationalite) throws Exception {
+        Auteur aut = new Auteur(nom, prenom, nationalite);
+        Auteur autTrouve = model.read(aut);
         if(aut==null) view.affMsg("Recherche infructueuse ");
         else view.affMsg(toString());
     }

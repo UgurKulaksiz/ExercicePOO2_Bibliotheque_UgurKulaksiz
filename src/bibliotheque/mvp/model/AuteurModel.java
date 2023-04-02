@@ -6,46 +6,50 @@ import bibliotheque.metier.Auteur;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AuteurModel implements DAOAuteur{
+
+public class AuteurModel implements DAOAuteur {
     private List<Auteur> auteurs = new ArrayList<>();
 
     @Override
-    public Auteur addAuteur(Auteur aut) {
-        boolean present= auteurs.contains(aut);
-        if(!present){
-            auteurs.add(aut);
-            return aut;
+    public Auteur add(Auteur auteur) {
+        boolean present = auteurs.contains(auteur);
+        if (!present) {
+            auteurs.add(auteur);
+            return auteur;
+        } else {
+            return null;
         }
-        else return null;
     }
 
     @Override
-    public boolean removeAuteur(Auteur aut) {
-        return auteurs.remove(aut);
+    public boolean remove(Auteur auteur) {
+        return auteurs.remove(auteur);
     }
 
     @Override
-    public Auteur readAuteur(String nomAuteur, String prenomAuteur, String nationalite) {
-        for (Auteur aut : auteurs) {
-            if (aut.getNom().equals(nomAuteur) && aut.getPrenom().equals(prenomAuteur)
-                    && aut.getNationalite().equals(nationalite)) return aut;
+    public Auteur update(Auteur auteur) {
+        boolean present = auteurs.contains(auteur);
+        if (present) {
+            auteurs.set(auteurs.indexOf(auteur), auteur);
+            return auteur;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public Auteur read(Auteur elementToSearch) {
+        for (Auteur auteur : auteurs) {
+            if (auteur.equals(elementToSearch)) {
+                return auteur;
+            }
         }
         return null;
     }
 
     @Override
-    public Auteur updateAuteur(Auteur aut) {
-        boolean present= auteurs.contains(aut);
-        if(present){
-            aut.setNom(aut.getNom());
-            aut.setPrenom(aut.getPrenom());
-            aut.setNationalite(aut.getNationalite());
-            aut.setLouvrage(aut.getLouvrage());
-
-            auteurs.set(auteurs.indexOf(aut), aut);
-            return aut;
-        }
-        else return null;
+    public List<Auteur> getAll() {
+        return new ArrayList<>(auteurs);
     }
 
     @Override

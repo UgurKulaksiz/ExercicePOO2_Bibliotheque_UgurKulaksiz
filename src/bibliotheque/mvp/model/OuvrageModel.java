@@ -1,6 +1,7 @@
 package bibliotheque.mvp.model;
 
 import bibliotheque.metier.Ouvrage;
+import bibliotheque.metier.Rayon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,14 @@ public class OuvrageModel implements DAOOuvrage{
     @Override
     public boolean removeOuvrage(Ouvrage ouvrage) {
         return ouvrages.remove(ouvrage);
+    }
+
+    @Override
+    public Ouvrage readOuvrage(String titre) {
+        for (Ouvrage ouv : ouvrages) {
+            if (ouv.getTitre().equals(titre)) return ouv;
+        }
+        return null;
     }
 
     @Override

@@ -21,6 +21,9 @@ public class Exemplaire {
 
 
     public Exemplaire(String matricule, String descriptionEtat, Ouvrage ouvrage) {
+        if(matricule == null || matricule.isEmpty() || descriptionEtat == null || descriptionEtat.isEmpty() || ouvrage == null) {
+            throw new IllegalArgumentException("Les valeurs passées en paramètre ne doivent pas être null ou vides.");
+        }
         this.matricule = matricule;
         this.descriptionEtat = descriptionEtat;
         this.ouvrage = ouvrage;
