@@ -1,15 +1,16 @@
 package bibliotheque.mvp.view;
 
+import bibliotheque.metier.Exemplaire;
 import bibliotheque.metier.Ouvrage;
+import bibliotheque.metier.Rayon;
 import bibliotheque.metier.TypeOuvrage;
 import bibliotheque.mvp.presenter.OuvragePresenter;
 import bibliotheque.utilitaires.Utilitaire;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+
+import static bibliotheque.utilitaires.Utilitaire.*;
 
 public class OuvrageViewConsole implements OuvrageViewInterface{
     private OuvragePresenter presenter;
@@ -37,8 +38,19 @@ public class OuvrageViewConsole implements OuvrageViewInterface{
         System.out.println("Information:" + msg);
     }
 
+    @Override
+    public void affList(List<Exemplaire> ouvEx) {
+        affListe(ouvEx);
+    }
+
+    @Override
+    public void affList(Double njours) {
+        affListe(Collections.singletonList(njours));
+    }
+
+
     public void menu() {
-        List options = new ArrayList<>(Arrays.asList("Ajouter", "Retirer", "Modifier", "Fin"));
+        List options = new ArrayList<>(Arrays.asList("Ajouter", "Rechercher", "Retirer", "Modifier", "Spécial", "Fin"));
         do {
             int ch = Utilitaire.choixListe(options);
 
@@ -47,79 +59,55 @@ public class OuvrageViewConsole implements OuvrageViewInterface{
                     ajouter();
                     break;
                 case 2:
-                    retirer();
+                    rechercher();
                     break;
                 case 3:
-                    modifier();
+                    retirer();
                     break;
                 case 4:
+                    modifier();
+                    break;
+                case 5:
+                    special();
+                    break;
+                case 6:
                     System.exit(0);
             }
         } while (true);
+    }
+
+    private void rechercher(){
+        System.out.println("Titre ouvrage : ");
+        String titre = sc.nextLine();
+        presenter.search(titre);
     }
 
     private void modifier() {
-        //TODO choisir elt et demander les nouvelles valeurs puis appeler méthode maj(lecteur) (à développer) du presenter
 
-        System.out.println(lOuvrage);
-        Utilitaire.affListe(lOuvrage);
-        int choix = Utilitaire.choixElt(lOuvrage);
-        Ouvrage ouvrage = lOuvrage.get(choix - 1);
-        presenter.updateOuvrage(ouvrage);
-        choixModif(ouvrage);
-    }
+        int choix = choixElt(lOuvrage);
+        Ouvrage ouv = lOuvrage.get(choix-1);
+        String titre = modifyIfNotBlank("Titre",ouv.getTitre());
+        int ageMin = Integer.parseInt(modifyIfNotBlank("Âge min", String.valueOf(ouv.getAgeMin())));
+        LocalDate dateParution = LocalDate.parse(modifyIfNotBlank("Date parution", String.valueOf(ouv.getDateParution())));
+        TypeOuvrage to = TypeOuvrage.valueOf(modifyIfNotBlank("Type Ouvrage", String.valueOf(ouv.getTo())));
+        Double prixLocation = Double.valueOf(modifyIfNotBlank("Prix location", String.valueOf(ouv.getPrixLocation())));
+        String langue = modifyIfNotBlank("Langue",ouv.getLangue());
+        String genre = modifyIfNotBlank("Genre",ouv.getGenre());
 
-    private void choixModif(Ouvrage ouvrage) {
-        List options = new ArrayList<>(Arrays.asList("Titre", "Âge minimum", "Date de parution", "Type Ouvrage",
-                "Prix de location", "Langue", "Genre"));
-
-        do {
-            int choix = Utilitaire.choixListe(options);
-            switch (choix) {
-                case 1:
-                    System.out.println("Titre : ");
-                    String titre = sc.nextLine();
-                    ouvrage.setTitre(titre);
-                    break;
-                case 2:
-                    System.out.println("Âge min : ");
-                    int ageMin = sc.nextInt();
-                    ouvrage.setAgeMin(ageMin);
-                    break;
-                case 3:
-                    System.out.println("Date de parution : ");
-                    String[] jma = sc.nextLine().split(" ");
-                    int j = Integer.parseInt(jma[0]);
-                    int m = Integer.parseInt(jma[1]);
-                    int a = Integer.parseInt(jma[2]);
-                    LocalDate dn = LocalDate.of(a, m, j);
-                    ouvrage.setDateParution(dn);
-                    break;
-                case 4:
-                    System.out.println("Type ouvrage :  ");
-                    TypeOuvrage to = TypeOuvrage.valueOf(sc.nextLine());
-                    ouvrage.setTo(to);
-                    break;
-                case 5:
-                    System.out.println("Prix de location : ");
-                    Double prixLoc = sc.nextDouble();
-                    ouvrage.setPrixLocation(prixLoc);
-                    break;
-                case 6:
-                    System.out.println("Langue : ");
-                    String lang = sc.nextLine();
-                    ouvrage.setLangue(lang);
-                    break;
-                case 7:
-                    System.out.println("Genre : ");
-                    String genre = sc.nextLine();
-                    ouvrage.setGenre(genre);
-                    break;
-                case 8:
-                    System.exit(0);
+        Ouvrage ouvrage = new Ouvrage(titre, ageMin, dateParution, to, prixLocation, langue, genre) {
+            @Override
+            public double amendeRetard(int njours) {
+                return 0;
             }
-        } while (true);
 
+            @Override
+            public int njlocmax() {
+                return 0;
+            }
+        };
+        presenter.updateOuvrage(ouv);
+        lOuvrage=presenter.getAll();//rafraichissement
+        Utilitaire.affListe(lOuvrage);
     }
 
     private void retirer() {
@@ -161,5 +149,33 @@ public class OuvrageViewConsole implements OuvrageViewInterface{
             }
         };
         presenter.addOuvrage(ouvrage);
+    }
+
+    private void special() {
+        Boolean enLocation = null;
+        int njours = 0;
+
+        int choix =  choixElt(lOuvrage);
+        Ouvrage ouv = lOuvrage.get(choix-1);
+        do {
+            System.out.println("1.Liste exemplaires \n2.Liste exemplaires Boolean \n3.Amende en retard \n4.menu principal");
+            System.out.println("choix : ");
+            int ch = sc.nextInt();
+            sc.skip("\n");
+            switch (ch) {
+                case 1:
+                    presenter.listerExemplaires();
+                    break;
+                case 2:
+                    presenter.listerExemplaires(enLocation);
+                    break;
+                case 3:
+                    presenter.amendeRetard(njours);
+                    break;
+                case 4: return;
+                default:
+                    System.out.println("Choix invalide recommencez ");
+            }
+        } while (true);
     }
 }

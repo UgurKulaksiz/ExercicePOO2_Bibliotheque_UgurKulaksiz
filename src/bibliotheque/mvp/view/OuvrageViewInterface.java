@@ -1,5 +1,6 @@
 package bibliotheque.mvp.view;
 
+import bibliotheque.metier.Exemplaire;
 import bibliotheque.metier.Ouvrage;
 import bibliotheque.mvp.presenter.OuvragePresenter;
 
@@ -11,4 +12,7 @@ public interface OuvrageViewInterface {
     public void setListDatas(List<Ouvrage> ouvrages);
 
     public void affMsg(String msg);
+    void affList(List<Exemplaire> lex);
+
+    void affList(Double njours);
 }

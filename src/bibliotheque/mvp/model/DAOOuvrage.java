@@ -11,5 +11,7 @@ public interface DAOOuvrage {
 
     Ouvrage updateOuvrage(Ouvrage ouvrage);
 
+    Ouvrage readOuvrage(String titre);
+
     List<Ouvrage> getOuvrages();
 }
