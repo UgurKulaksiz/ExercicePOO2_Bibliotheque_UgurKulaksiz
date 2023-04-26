@@ -9,7 +9,7 @@ import java.util.List;
 public interface OuvrageViewInterface {
     public void setPresenter(OuvragePresenter presenter);
 
-    public void setListDatas(List<Ouvrage> ouvrages);
+    public void setListDatas(List<Ouvrage> ouvrages) throws Exception;
 
     public void affMsg(String msg);
     void affList(List<Exemplaire> lex);

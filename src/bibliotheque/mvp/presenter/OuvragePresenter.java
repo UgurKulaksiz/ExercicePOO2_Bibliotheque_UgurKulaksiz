@@ -19,7 +19,7 @@ public class OuvragePresenter {
         this.view.setPresenter(this);
     }
 
-    public void start() {
+    public void start() throws Exception {
         List<Ouvrage> ouvrages = model.getOuvrages();
         view.setListDatas(ouvrages);
     }
@@ -29,8 +29,8 @@ public class OuvragePresenter {
     }
 
 
-    public void addOuvrage(Ouvrage ouvrage) {
-        Ouvrage ouvr = model.addOuvrage(ouvrage);
+    public void addOuvrage(Ouvrage ouvrage) throws Exception {
+        Ouvrage ouvr = model.add(ouvrage);
         if(ouvr!=null) view.affMsg("Création de :"+ouvr);
         else view.affMsg("Erreur de création");
         List<Ouvrage> ouvrages = model.getOuvrages();
@@ -38,8 +38,8 @@ public class OuvragePresenter {
     }
 
 
-    public void removeOuvrage(Ouvrage ouvrage) {
-        boolean ok = model.removeOuvrage(ouvrage);
+    public void removeOuvrage(Ouvrage ouvrage) throws Exception {
+        boolean ok = model.remove(ouvrage);
         if(ok) view.affMsg("Ouvrage effacé");
         else view.affMsg("Ouvrage non effacé");
         List<Ouvrage> ouvrages = model.getOuvrages();
@@ -47,16 +47,16 @@ public class OuvragePresenter {
     }
 
     //Méthode màj à développer
-    public void updateOuvrage(Ouvrage ouvrage){
-        Ouvrage lOuvrage = model.updateOuvrage(ouvrage);
+    public void updateOuvrage(Ouvrage ouvrage) throws Exception {
+        Ouvrage lOuvrage = model.update(ouvrage);
         if(lOuvrage!=null) view.affMsg("Mise à jour de :"+lOuvrage);
         else view.affMsg("Erreur de màj");
         List<Ouvrage> ouvrages = model.getOuvrages();
         view.setListDatas(ouvrages);
     }
 
-    public void search(String titre){
-        Ouvrage ouv = model.readOuvrage(titre);
+    public void search(Ouvrage ouvrage){
+        Ouvrage ouv = model.read(ouvrage);
         if(ouv==null) view.affMsg("Recherche infructueuse ");
         else view.affMsg(toString());
     }

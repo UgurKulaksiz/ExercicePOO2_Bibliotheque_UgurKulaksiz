@@ -79,7 +79,7 @@ public class AuteurViewConsole implements AuteurViewInterface {
             String nationalite = sc.nextLine();
             presenter.search(nom, prenom, nationalite);
         }catch (Exception e){
-            System.out.println("Erreur : "+e.getMessage());
+            System.out.println("Erreur de recherche d'auteur : "+e.getMessage());
         }
 
     }
@@ -116,9 +116,9 @@ public class AuteurViewConsole implements AuteurViewInterface {
             String nationalite = sc.nextLine();
 
             Auteur aut = new Auteur(nom, prenom, nationalite);
-            presenter.add(aut);
+            presenter.addAuteur(aut);
         }catch (Exception e){
-            System.out.println("Erreur : "+e.getMessage());
+            System.out.println("Erreur d'ajout d'auteur : "+e.getMessage());
         }
 
     }

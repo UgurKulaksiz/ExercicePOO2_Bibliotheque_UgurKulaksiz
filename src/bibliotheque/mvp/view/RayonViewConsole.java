@@ -12,7 +12,7 @@ import java.util.Scanner;
 import static bibliotheque.utilitaires.Utilitaire.*;
 import static bibliotheque.utilitaires.Utilitaire.modifyIfNotBlank;
 
-public class RayonViewConsole implements RayonViewInterface{
+public class RayonViewConsole implements RayonViewInterface {
     private RayonPresenter presenter;
     private List<Rayon> lRayon;
     private Scanner sc = new Scanner(System.in);
@@ -26,7 +26,7 @@ public class RayonViewConsole implements RayonViewInterface{
     }
 
     @Override
-    public void setListDatas(List<Rayon> rayons) {
+    public void setListDatas(List<Rayon> rayons) throws Exception {
         this.lRayon = rayons;
         Utilitaire.affListe(lRayon);
         menu();
@@ -42,7 +42,7 @@ public class RayonViewConsole implements RayonViewInterface{
         affListe(rayEx);
     }
 
-    public void menu() {
+    public void menu() throws Exception {
         List options = new ArrayList<>(Arrays.asList("Ajouter", "Rechercher", "Retirer", "Modifier", "Spécial", "Fin"));
         do {
             int ch = Utilitaire.choixListe(options);
@@ -69,26 +69,31 @@ public class RayonViewConsole implements RayonViewInterface{
         } while (true);
     }
 
-    private void rechercher(){
-        System.out.println("Code rayon : ");
-        String code = sc.nextLine();
-        presenter.search(code);
+    private void rechercher() {
+        try {
+            System.out.println("Code rayon : ");
+            String code = sc.nextLine();
+            presenter.search(code);
+        } catch (Exception e) {
+            System.out.println("Erreur de recherche du rayon : " + e);
+        }
+
     }
 
-    private void modifier() {
+    private void modifier() throws Exception {
 
         int choix = choixElt(lRayon);
-        Rayon ray = lRayon.get(choix-1);
-        String codeRayon = modifyIfNotBlank("Code rayon",ray.getCodeRayon());
-        String genre = modifyIfNotBlank("Genre",ray.getGenre());
+        Rayon ray = lRayon.get(choix - 1);
+        String codeRayon = modifyIfNotBlank("Code rayon", ray.getCodeRayon());
+        String genre = modifyIfNotBlank("Genre", ray.getGenre());
 
         Rayon rayon = new Rayon(codeRayon, genre);
         presenter.updateRayon(rayon);
-        lRayon=presenter.getAll();//rafraichissement
+        lRayon = presenter.getAll();//rafraichissement
         Utilitaire.affListe(lRayon);
     }
 
-    private void retirer() {
+    private void retirer() throws Exception {
         int choix = Utilitaire.choixElt(lRayon);
         Rayon rayon = lRayon.get(choix - 1);
         presenter.removeRayon(rayon);
@@ -96,19 +101,24 @@ public class RayonViewConsole implements RayonViewInterface{
 
 
     private void ajouter() {
-        System.out.println("Code rayon ");
-        String code = sc.nextLine();
-        System.out.println("Genre ");
-        String genre = sc.nextLine();
+        try {
+            System.out.println("Code rayon ");
+            String code = sc.nextLine();
+            System.out.println("Genre ");
+            String genre = sc.nextLine();
 
-        Rayon ray = new Rayon(code, genre);
-        presenter.addRayon(ray);
+            Rayon ray = new Rayon(code, genre);
+            presenter.addRayon(ray);
+        } catch (Exception e) {
+            System.out.println("Erreur d'ajout du rayon : " + e);
+        }
+
     }
 
     //Méthode special()
     private void special() {
-        int choix =  choixElt(lRayon);
-        Rayon ray = lRayon.get(choix-1);
+        int choix = choixElt(lRayon);
+        Rayon ray = lRayon.get(choix - 1);
         do {
             System.out.println("1.Liste exemplaires \n2.menu principal");
             System.out.println("choix : ");
@@ -118,7 +128,8 @@ public class RayonViewConsole implements RayonViewInterface{
                 case 1:
                     presenter.listerExemplaires();
                     break;
-                case 2: return;
+                case 2:
+                    return;
                 default:
                     System.out.println("Choix invalide recommencez ");
             }

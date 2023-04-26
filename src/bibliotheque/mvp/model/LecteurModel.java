@@ -10,7 +10,7 @@ public class LecteurModel implements DAOLecteur{
     private List<Lecteur> lecteurs = new ArrayList<>();
 
     @Override
-    public Lecteur addLecteur(Lecteur lec) {
+    public Lecteur add(Lecteur lec) {
         boolean present= lecteurs.contains(lec);
         if(!present){
             numLec++;
@@ -22,20 +22,21 @@ public class LecteurModel implements DAOLecteur{
     }
 
     @Override
-    public boolean removeLecteur(Lecteur lec) {
+    public boolean remove(Lecteur lec) {
         return lecteurs.remove(lec);
     }
 
     @Override
-    public Lecteur readLecteur(int idLecteur) {
+    public Lecteur read(Lecteur lec) {
         for (Lecteur l : lecteurs) {
-            if (l.getNumlecteur() == idLecteur) return l;
+            if (l.getNumlecteur() == lec.getNumlecteur()) return l;
         }
         return null;
     }
 
+
     @Override
-    public Lecteur updateLecteur(Lecteur lec) {
+    public Lecteur update(Lecteur lec) {
         boolean present= lecteurs.contains(lec);
         if(present){
             lec.setNom(lec.getNom());
@@ -48,6 +49,11 @@ public class LecteurModel implements DAOLecteur{
             return lec;
         }
         else return null;
+    }
+
+    @Override
+    public List<Lecteur> getAll() {
+        return new ArrayList<>(lecteurs);
     }
 
     @Override

@@ -12,7 +12,7 @@ public class RayonModel implements DAORayon{
     private List<Rayon> rayons = new ArrayList<>();
 
     @Override
-    public Rayon addRayon (Rayon ray) {
+    public Rayon add(Rayon ray) {
         boolean present= rayons.contains(ray);
         if(!present){
             rayons.add(ray);
@@ -22,20 +22,20 @@ public class RayonModel implements DAORayon{
     }
 
     @Override
-    public boolean removeRayon(Rayon ray) {
+    public boolean remove(Rayon ray) {
         return rayons.remove(ray);
     }
 
     @Override
-    public Rayon readRayon(String code) {
+    public Rayon read(Rayon rayon) {
         for (Rayon ray : rayons) {
-            if (ray.getCodeRayon().equals(code)) return ray;
+            if (ray.getCodeRayon().equals(rayon.getCodeRayon())) return ray;
         }
         return null;
     }
 
     @Override
-    public Rayon updateRayon(Rayon ray) {
+    public Rayon update(Rayon ray) {
         boolean present= rayons.contains(ray);
         if(present){
             ray.setCodeRayon(ray.getCodeRayon());
@@ -45,6 +45,11 @@ public class RayonModel implements DAORayon{
             return ray;
         }
         else return null;
+    }
+
+    @Override
+    public List<Rayon> getAll() {
+        return new ArrayList<>(rayons);
     }
 
     @Override

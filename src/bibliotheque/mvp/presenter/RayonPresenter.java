@@ -1,11 +1,8 @@
 package bibliotheque.mvp.presenter;
 
 import bibliotheque.metier.*;
-import bibliotheque.mvp.model.DAOAuteur;
 import bibliotheque.mvp.model.DAORayon;
-import bibliotheque.mvp.model.SpecialAuteur;
 import bibliotheque.mvp.model.SpecialRayon;
-import bibliotheque.mvp.view.AuteurViewInterface;
 import bibliotheque.mvp.view.RayonViewInterface;
 
 import java.util.List;
@@ -20,7 +17,7 @@ public class RayonPresenter {
         this.view.setPresenter(this);
     }
 
-    public void start() {
+    public void start() throws Exception {
         List<Rayon> rayons = model.getRayons();
         view.setListDatas(rayons);
     }
@@ -29,8 +26,8 @@ public class RayonPresenter {
         return model.getRayons();
     }
 
-    public void addRayon(Rayon rayon) {
-        Rayon ray = model.addRayon(rayon);
+    public void addRayon(Rayon rayon) throws Exception {
+        Rayon ray = model.add(rayon);
         if(rayon!=null) view.affMsg("Création de :"+ray);
         else view.affMsg("Erreur de création");
         List<Rayon> rayons = model.getRayons();
@@ -38,8 +35,8 @@ public class RayonPresenter {
     }
 
 
-    public void removeRayon(Rayon rayon) {
-        boolean ok = model.removeRayon(rayon);
+    public void removeRayon(Rayon rayon) throws Exception {
+        boolean ok = model.remove(rayon);
         if(ok) view.affMsg("Rayon effacé");
         else view.affMsg("Rayon non effacé");
         List<Rayon> rayons = model.getRayons();
@@ -47,16 +44,16 @@ public class RayonPresenter {
     }
 
     //Méthode màj à développer
-    public void updateRayon(Rayon ray){
-        Rayon lRayon = model.updateRayon(ray);
+    public void updateRayon(Rayon ray) throws Exception {
+        Rayon lRayon = model.update(ray);
         if(lRayon!=null) view.affMsg("Mise à jour de :"+lRayon);
         else view.affMsg("Erreur de màj");
         List<Rayon> rayons = model.getRayons();
         view.setListDatas(rayons);
     }
 
-    public void search(String code){
-        Rayon ray = model.readRayon(code);
+    public void search(Rayon rayon){
+        Rayon ray = model.read(rayon.getCodeRayon());
         if(ray==null) view.affMsg("Recherche infructueuse ");
         else view.affMsg(toString());
     }

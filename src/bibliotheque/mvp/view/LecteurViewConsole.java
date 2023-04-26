@@ -72,51 +72,51 @@ public class LecteurViewConsole implements LecteurViewInterface {
     }
 
     private void rechercher() {
-        try{
+        try {
             System.out.println("numLecteur : ");
             int idLecteur = sc.nextInt();
             presenter.search(idLecteur);
-        }catch (Exception e){
-            System.out.println("Erreur : "+e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Erreur de recherche du lecteur : " + e.getMessage());
         }
 
     }
 
-    private void modifier(){
-        try{
+    private void modifier() {
+        try {
             int choix = choixElt(llec);
-            Lecteur l = llec.get(choix-1);
-            String nom = modifyIfNotBlank("nom",l.getNom());
-            String prenom = modifyIfNotBlank("prénom",l.getPrenom());
-            String date = modifyIfNotBlank("date de naissance",getDateFrench(l.getDn()));
+            Lecteur l = llec.get(choix - 1);
+            String nom = modifyIfNotBlank("nom", l.getNom());
+            String prenom = modifyIfNotBlank("prénom", l.getPrenom());
+            String date = modifyIfNotBlank("date de naissance", getDateFrench(l.getDn()));
             String[] jma = date.split(" ");
             int j = Integer.parseInt(jma[0]);
             int m = Integer.parseInt(jma[1]);
             int a = Integer.parseInt(jma[2]);
             LocalDate dn = LocalDate.of(a, m, j);
-            String adr = modifyIfNotBlank("adresse",l.getAdresse());
-            String mail= modifyIfNotBlank("mail",l.getMail());
-            String tel =modifyIfNotBlank("tel",l.getTel());
+            String adr = modifyIfNotBlank("adresse", l.getAdresse());
+            String mail = modifyIfNotBlank("mail", l.getMail());
+            String tel = modifyIfNotBlank("tel", l.getTel());
             Lecteur lec = new Lecteur(l.getNumlecteur(), nom, prenom, dn, adr, mail, tel);
             presenter.updateLecteur(lec);
-            llec=presenter.getAll();//rafraichissement
+            llec = presenter.getAll();//rafraichissement
             Utilitaire.affListe(llec);
-        }catch (Exception e){
-            System.out.println("Erreur : "+e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Erreur : " + e.getMessage());
         }
 
     }
 
     private void retirer() {
-        try{
+        try {
             int choix = choixElt(llec);
-            Lecteur lecteur = llec.get(choix-1);
+            Lecteur lecteur = llec.get(choix - 1);
             presenter.removeLecteur(lecteur);
-            llec=presenter.getAll();//rafraichissement
+            llec = presenter.getAll();//rafraichissement
             Utilitaire.affListe(llec);
 
-        } catch (Exception e){
-            System.out.println("Erreur : "+e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Erreur : " + e.getMessage());
         }
 
     }
@@ -142,17 +142,18 @@ public class LecteurViewConsole implements LecteurViewInterface {
             String tel = sc.nextLine();
             Lecteur lec = new Lecteur(0, nom, prenom, dn, adr, mail, tel);
             presenter.addLecteur(lec);
-            llec=presenter.getAll();//rafraichissement
+            llec = presenter.getAll();//rafraichissement
             Utilitaire.affListe(llec);
 
-        }catch (Exception e){
-            System.out.println("Erreur : "+e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Erreur d'ajout du lecteur : " + e.getMessage());
         }
 
     }
+
     private void special() {
-        int choix =  choixElt(llec);
-        Lecteur lec = llec.get(choix-1);
+        int choix = choixElt(llec);
+        Lecteur lec = llec.get(choix - 1);
         do {
             System.out.println("1.Exemplaire en location\n2.Exemplaires loués\n3.menu principal");
             System.out.println("choix : ");
@@ -165,7 +166,8 @@ public class LecteurViewConsole implements LecteurViewInterface {
                 case 2:
                     presenter.exemplairesLoues(lec);
                     break;
-                case 3: return;
+                case 3:
+                    return;
                 default:
                     System.out.println("choix invalide recommencez ");
             }

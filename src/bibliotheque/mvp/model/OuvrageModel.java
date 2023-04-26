@@ -12,7 +12,7 @@ public class OuvrageModel implements DAOOuvrage{
     private List<Ouvrage> ouvrages = new ArrayList<>();
 
     @Override
-    public Ouvrage addOuvrage(Ouvrage ouvrage) {
+    public Ouvrage add(Ouvrage ouvrage) {
         boolean present = ouvrages.contains(ouvrage);
         if(!present){
             ouvrage.setTitre(ouvrage.getTitre());
@@ -23,20 +23,20 @@ public class OuvrageModel implements DAOOuvrage{
     }
 
     @Override
-    public boolean removeOuvrage(Ouvrage ouvrage) {
+    public boolean remove(Ouvrage ouvrage) {
         return ouvrages.remove(ouvrage);
     }
 
     @Override
-    public Ouvrage readOuvrage(String titre) {
+    public Ouvrage read(Ouvrage ouvrage) {
         for (Ouvrage ouv : ouvrages) {
-            if (ouv.getTitre().equals(titre)) return ouv;
+            if (ouv.getTitre().equals(ouvrage.getTitre())) return ouv;
         }
         return null;
     }
 
     @Override
-    public Ouvrage updateOuvrage(Ouvrage ouvrage) {
+    public Ouvrage update(Ouvrage ouvrage) {
         boolean present= ouvrages.contains(ouvrage);
         if(present){
             ouvrage.setTitre(ouvrage.getTitre());
@@ -51,6 +51,11 @@ public class OuvrageModel implements DAOOuvrage{
             return ouvrage;
         }
         else return null;
+    }
+
+    @Override
+    public List<Ouvrage> getAll() {
+        return new ArrayList<>(ouvrages);
     }
 
     @Override

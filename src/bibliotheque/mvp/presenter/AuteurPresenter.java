@@ -1,7 +1,6 @@
 package bibliotheque.mvp.presenter;
 
 import bibliotheque.metier.*;
-import bibliotheque.mvp.model.AuteurModel;
 import bibliotheque.mvp.model.DAOAuteur;
 import bibliotheque.mvp.model.SpecialAuteur;
 import bibliotheque.mvp.view.AuteurViewInterface;
@@ -27,7 +26,7 @@ public class AuteurPresenter {
         return model.getAuteurs();
     }
 
-    public void add(Auteur auteur) throws Exception {
+    public void addAuteur(Auteur auteur) throws Exception {
         Auteur aut = model.add(auteur);
         if(auteur!=null) view.affMsg("Création de :"+aut);
         else view.affMsg("Erreur de création");

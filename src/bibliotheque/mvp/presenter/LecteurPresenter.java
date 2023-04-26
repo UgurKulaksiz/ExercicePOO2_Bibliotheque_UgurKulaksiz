@@ -18,7 +18,7 @@ public class LecteurPresenter {
         this.view.setPresenter(this);
     }
 
-    public void start() {
+    public void start() throws Exception {
         view.setListDatas(getAll());
     }
 
@@ -26,8 +26,8 @@ public class LecteurPresenter {
         return model.getLecteurs();
     }
 
-    public void addLecteur(Lecteur lecteur) {
-        Lecteur lec = model.addLecteur(lecteur);
+    public void addLecteur(Lecteur lecteur) throws Exception {
+        Lecteur lec = model.add(lecteur);
         if (lec != null) view.affMsg("création de :" + lec);
         else view.affMsg("erreur de création");
         List<Lecteur> lecteurs = model.getLecteurs();
@@ -37,8 +37,8 @@ public class LecteurPresenter {
     }
 
 
-    public void removeLecteur(Lecteur lecteur) {
-        boolean ok = model.removeLecteur(lecteur);
+    public void removeLecteur(Lecteur lecteur) throws Exception {
+        boolean ok = model.remove(lecteur);
         if (ok) view.affMsg("lecteur effacé");
         else view.affMsg("lecteur non effacé");
         List<Lecteur> lecteurs = model.getLecteurs();
@@ -48,8 +48,8 @@ public class LecteurPresenter {
     }
 
     //Méthode màj à développer
-    public void updateLecteur(Lecteur lec) {
-        Lecteur lLecteur = model.updateLecteur(lec);
+    public void updateLecteur(Lecteur lec) throws Exception {
+        Lecteur lLecteur = model.update(lec);
         if (lLecteur != null) view.affMsg("Mise à jour de :" + lLecteur);
         else view.affMsg("Erreur de màj");
         List<Lecteur> lecteurs = model.getLecteurs();
@@ -57,8 +57,8 @@ public class LecteurPresenter {
         //view.setListDatas(model.getClients());//désactivé pour éviter appels imbriqués
     }
 
-    public void search(int idLecteur) {
-        Lecteur lec = model.readLecteur(idLecteur);
+    public void search(Lecteur idLecteur) {
+        Lecteur lec = model.read(idLecteur);
         if (lec == null) view.affMsg("Recherche infructueuse ");
         else view.affMsg(toString());
     }
