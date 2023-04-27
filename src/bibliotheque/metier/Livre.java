@@ -13,10 +13,6 @@ public class Livre extends Ouvrage{
 
     public Livre(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre, String isbn, int nbrePages, TypeLivre tl, String resume) {
         super(titre, ageMin, dateParution, TypeOuvrage.LIVRE, prixLocation, langue, genre);
-
-        if(isbn.isEmpty() || nbrePages <= 0 || tl == null || resume.isEmpty()) {
-            throw new IllegalArgumentException("Les valeurs passées en paramètre ne sont pas valides.");
-        }
         this.isbn=isbn;
         this.nbrePages=nbrePages;
         this.tl=tl;

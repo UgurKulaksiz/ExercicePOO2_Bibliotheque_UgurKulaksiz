@@ -1,11 +1,12 @@
 package bibliotheque.mvp.model;
 
 import bibliotheque.metier.Exemplaire;
+import bibliotheque.metier.Ouvrage;
 
 import java.util.List;
 
 public interface SpecialOuvrage {
-    public List<Exemplaire> listerExemplaires();
-    public List<Exemplaire> listerExemplaires(Boolean enLocation);
-    public abstract double amendeRetard(int njours);
+    public List<Exemplaire> listerExemplaire(Ouvrage o);
+    public List<Exemplaire> listerExemplaire(Ouvrage o, boolean enLocation);
+    public double amendeRetard(Ouvrage o, int njours);
 }

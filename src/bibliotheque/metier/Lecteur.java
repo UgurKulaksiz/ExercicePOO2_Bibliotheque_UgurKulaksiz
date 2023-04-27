@@ -13,10 +13,10 @@ public class Lecteur {
 
     private List<Location> lloc = new ArrayList<>();
 
-    public Lecteur(int numlecteur, String nom, String prenom, LocalDate dn, String adresse, String mail, String tel) {
-        if(numlecteur <= 0 || nom.isEmpty() || prenom.isEmpty() || dn == null || adresse.isEmpty() || mail.isEmpty() || tel.isEmpty()) {
-            throw new IllegalArgumentException("Les valeurs passées en paramètre ne sont pas valides.");
-        }
+    public Lecteur(int numlecteur, String nom, String prenom, LocalDate dn, String adresse, String mail, String tel) throws Exception{
+        if(nom==null || prenom==null ||nom.trim().equals("")||prenom.trim().equals(""))
+            throw new Exception("Informations invalides");
+
         this.numlecteur = numlecteur;
         this.nom = nom;
         this.prenom = prenom;

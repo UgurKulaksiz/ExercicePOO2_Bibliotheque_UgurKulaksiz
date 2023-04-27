@@ -11,10 +11,8 @@ public class Location {
     private Lecteur loueur;
     private Exemplaire exemplaire;
 
-    public Location(LocalDate dateLocation, LocalDate dateRestitution, Lecteur loueur, Exemplaire exemplaire) {
-        if(dateLocation == null || dateRestitution == null || loueur == null || exemplaire == null) {
-            throw new IllegalArgumentException("Les valeurs passées en paramètre ne sont pas valides.");
-        }
+    public Location(LocalDate dateLocation, LocalDate dateRestitution, Lecteur loueur, Exemplaire exemplaire) throws Exception {
+        if(loueur==null || exemplaire==null)  throw new Exception("informations invalides");
         this.dateLocation = dateLocation;
         this.dateRestitution = dateRestitution;
         this.loueur = loueur;
