@@ -12,7 +12,7 @@ public class Location {
     private Exemplaire exemplaire;
 
     public Location(LocalDate dateLocation, LocalDate dateRestitution, Lecteur loueur, Exemplaire exemplaire) throws Exception {
-        if(loueur==null || exemplaire==null)  throw new Exception("informations invalides");
+        if(loueur==null || exemplaire==null)  throw new Exception("Informations invalides");
         this.dateLocation = dateLocation;
         this.dateRestitution = dateRestitution;
         this.loueur = loueur;

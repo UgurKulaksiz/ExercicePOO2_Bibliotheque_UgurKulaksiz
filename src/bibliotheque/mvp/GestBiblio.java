@@ -12,32 +12,31 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GestBiblio {
-    //LECTEUR
     private DAO<Lecteur> lm;
     private ViewInterface<Lecteur> lv;
     private Presenter<Lecteur> lp;
 
-    //RAYON
+
     private DAO<Rayon> rm;
     private ViewInterface<Rayon> rv;
     private Presenter<Rayon> rp;
 
-    //AUTEUR
+
     private DAO<Auteur> am;
     private ViewInterface<Auteur> av;
     private Presenter<Auteur> ap;
 
-    //OUVRAGE
+
     private DAO<Ouvrage> om;
     private ViewInterface<Ouvrage> ov;
     private Presenter<Ouvrage> op;
 
-    //EXEMPLAIRE
+
     private DAO<Exemplaire> em;
     private ViewInterface<Exemplaire> ev;
     private Presenter<Exemplaire> ep;
 
-    //LOCATION
+
     private DAO<Location> locm;
     private ViewInterface<Location> locv;
     private Presenter<Location> locp;

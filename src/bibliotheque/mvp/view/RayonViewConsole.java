@@ -21,7 +21,7 @@ public class RayonViewConsole extends AbstractViewConsole {
 
     @Override
     protected void ajouter() {
-        Rayon r =null;
+        Rayon r = null;
         do {
             try {
                 System.out.println("code rayon ");
@@ -30,14 +30,13 @@ public class RayonViewConsole extends AbstractViewConsole {
                 String genre = sc.nextLine();
                 r = new Rayon(code, genre);
                 presenter.add(r);
-                ldatas=presenter.getAll();//rafraichissement
+                ldatas = presenter.getAll();//rafraichissement
                 affListe(ldatas);
                 break;
+            } catch (Exception e) {
+                System.out.println("une erreur est survenue : " + e);
             }
-            catch (Exception e){
-                System.out.println("une erreur est survenue : "+e);
-            }
-        }while(true);
+        } while (true);
 
     }
 
