@@ -6,7 +6,6 @@ import bibliotheque.metier.Livre;
 import bibliotheque.metier.Ouvrage;
 import bibliotheque.metier.TypeLivre;
 
-import java.util.ArrayList;
 import java.util.List;
 
 

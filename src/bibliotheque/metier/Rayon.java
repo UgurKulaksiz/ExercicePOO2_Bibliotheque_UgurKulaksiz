@@ -70,4 +70,10 @@ public class Rayon {
         this.lex = lex;
     }
 
+    /* Méthode : Lister les exemplaires du rayon */
+    public List<Exemplaire>listerExemplaires(){
+        return lex;
+    }
+
+
 }
