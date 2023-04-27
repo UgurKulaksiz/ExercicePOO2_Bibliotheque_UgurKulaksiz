@@ -2,58 +2,27 @@ package bibliotheque.mvp.model;
 
 
 import bibliotheque.metier.Auteur;
+import bibliotheque.metier.Livre;
+import bibliotheque.metier.Ouvrage;
+import bibliotheque.metier.TypeLivre;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class AuteurModel implements DAOAuteur {
-    private List<Auteur> auteurs = new ArrayList<>();
-
+public class AuteurModel extends AbstractModel<Auteur> implements SpecialAuteur {
     @Override
-    public Auteur add(Auteur auteur) {
-        boolean present = auteurs.contains(auteur);
-        if (!present) {
-            auteurs.add(auteur);
-            return auteur;
-        } else {
-            return null;
-        }
+    public List<Ouvrage> listerOuvrages(Auteur a) {
+        return a.listerOuvrages();
     }
 
     @Override
-    public boolean remove(Auteur auteur) {
-        return auteurs.remove(auteur);
+    public List<Livre> listerLivre(Auteur a, TypeLivre tl) {
+        return a.listerLivres(tl);
     }
 
     @Override
-    public Auteur update(Auteur auteur) {
-        boolean present = auteurs.contains(auteur);
-        if (present) {
-            auteurs.set(auteurs.indexOf(auteur), auteur);
-            return auteur;
-        } else {
-            return null;
-        }
-    }
-
-    @Override
-    public Auteur read(Auteur elementToSearch) {
-        for (Auteur auteur : auteurs) {
-            if (auteur.equals(elementToSearch)) {
-                return auteur;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public List<Auteur> getAll() {
-        return new ArrayList<>(auteurs);
-    }
-
-    @Override
-    public List<Auteur> getAuteurs() {
-        return new ArrayList<>(auteurs);
+    public List<Ouvrage> listerOuvrages(Auteur a, String genre) {
+        return a.listerOuvrages(genre);
     }
 }

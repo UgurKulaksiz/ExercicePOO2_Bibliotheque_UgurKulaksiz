@@ -6,9 +6,6 @@ public class Mail {
     private String dateEnvoi;
 
     public Mail(String objet, String message, String dateEnvoi) {
-        if(objet.isEmpty() || message.isEmpty() || dateEnvoi.isEmpty()) {
-            throw new IllegalArgumentException("Les valeurs passées en paramètre ne sont pas valides.");
-        }
         this.objet = objet;
         this.message = message;
         this.dateEnvoi = dateEnvoi;

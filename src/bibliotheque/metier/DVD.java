@@ -16,10 +16,6 @@ public class DVD extends Ouvrage {
 
     public DVD(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre, long code, LocalTime dureeTotale, byte nbreBonus) {
         super(titre, ageMin, dateParution, TypeOuvrage.DVD, prixLocation, langue, genre);
-
-        if(code <= 0 || dureeTotale == null || nbreBonus <= 0) {
-            throw new IllegalArgumentException("Les valeurs passées en paramètre ne sont pas valides.");
-        }
         this.code = code;
         this.dureeTotale = dureeTotale;
         this.nbreBonus = nbreBonus;

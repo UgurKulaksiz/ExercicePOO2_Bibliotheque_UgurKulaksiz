@@ -3,17 +3,16 @@ package bibliotheque.mvp.model;
 import bibliotheque.metier.Exemplaire;
 import bibliotheque.metier.Lecteur;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LecteurModel extends AbstractModel<Lecteur> implements SpecialLecteur{
-    private int numLecteur = 0;
-    private List<Lecteur> lecteurs = new ArrayList<>();
-
-    public Lecteur add(Lecteur nl){
-        Lecteur l = super.add(nl);
-        if(l!=null) l.setNumlecteur(++numLecteur);
-        return  l;
+public class LecteurModelV1 implements DAOLecteur, SpecialLecteur{
+    private void populate() throws Exception {
+        Lecteur lec = new Lecteur(0,"Dupont","Jean", LocalDate.of(2000,1,4),"Mons","jean.dupont@mail.com","0458774411");
+        addLecteur(lec);
+        lec = new Lecteur(0,"Durant","Aline",LocalDate.of(1980,10,10),"Binche","aline.durant@mail.com","045874444");
+        addLecteur(lec);
     }
 
     @Override
