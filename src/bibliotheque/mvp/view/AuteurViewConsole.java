@@ -5,6 +5,7 @@ import bibliotheque.mvp.presenter.SpecialAuteurPresenter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import static bibliotheque.utilitaires.Utilitaire.*;
@@ -21,8 +22,8 @@ public class AuteurViewConsole extends AbstractViewConsole<Auteur> implements Sp
             String nat = sc.nextLine();
             Auteur rech = new Auteur(nom, prenom, nat);
             presenter.search(rech);
-        }catch(Exception e){
-            System.out.println("erreur : "+e);
+        } catch (Exception e) {
+            System.out.println("erreur : " + e);
         }
 
     }
@@ -30,7 +31,7 @@ public class AuteurViewConsole extends AbstractViewConsole<Auteur> implements Sp
     @Override
     protected void modifier() {
         int choix = choixElt(ldatas);
-        Auteur a = ldatas.get(choix-1);
+        Auteur a = ldatas.get(choix - 1);
         do {
             try {
                 String nom = modifyIfNotBlank("nom", a.getNom());
@@ -43,16 +44,16 @@ public class AuteurViewConsole extends AbstractViewConsole<Auteur> implements Sp
             } catch (Exception e) {
                 System.out.println("erreur :" + e);
             }
-        }while(true);
+        } while (true);
         presenter.update(a);
-        ldatas=presenter.getAll();//rafraichissement
+        ldatas = presenter.getAll();//rafraichissement
         affListe(ldatas);
 
     }
 
     @Override
     protected void ajouter() {
-        Auteur a=null;
+        Auteur a = null;
         do {
             try {
                 System.out.println("nom ");
@@ -65,9 +66,9 @@ public class AuteurViewConsole extends AbstractViewConsole<Auteur> implements Sp
                 presenter.add(a);
                 break;
             } catch (Exception e) {
-                System.out.println("une erreur est survenue : "+e.getMessage());
+                System.out.println("une erreur est survenue : " + e.getMessage());
             }
-        }while(true);
+        } while (true);
 
 
         //TODO attribuer ouvrages , les ouvrages sont triés par ordre de titre
@@ -75,10 +76,10 @@ public class AuteurViewConsole extends AbstractViewConsole<Auteur> implements Sp
 
     @Override
     protected void special() {
-        int choix =  choixElt(ldatas);
-        Auteur a = ldatas.get(choix-1);
+        int choix = choixElt(ldatas);
+        Auteur a = ldatas.get(choix - 1);
 
-        List options = new ArrayList<>(Arrays.asList("lister ouvrages", "lister livres", "lister par genre","fin"));
+        List options = new ArrayList<>(Arrays.asList("lister ouvrages", "lister livres", "lister par genre", "fin"));
         do {
             int ch = choixListe(options);
 
@@ -93,7 +94,8 @@ public class AuteurViewConsole extends AbstractViewConsole<Auteur> implements Sp
                 case 3:
                     listerGenre(a);
                     break;
-                case 4 :return;
+                case 4:
+                    return;
             }
         } while (true);
     }
@@ -102,20 +104,35 @@ public class AuteurViewConsole extends AbstractViewConsole<Auteur> implements Sp
     public void listerGenre(Auteur a) {
         System.out.println("genre :");
         String genre = sc.nextLine();
-        ((SpecialAuteurPresenter)presenter).listerOuvrages(a,genre);
+        ((SpecialAuteurPresenter) presenter).listerOuvrages(a, genre);
     }
 
     @Override
-    public void listerOuvrages(Auteur a){
-        ((SpecialAuteurPresenter)presenter).listerOuvrages(a);
+    public void listerOuvrages(Auteur a) {
+        ((SpecialAuteurPresenter) presenter).listerOuvrages(a);
     }
 
     @Override
-    public void listerLivres(Auteur a){
+    public void listerLivres(Auteur a) {
         TypeLivre[] tlv = TypeLivre.values();
         int ch2 = choixListe(List.of(tlv));
-        TypeLivre tl = tlv[ch2-1];
-        ((SpecialAuteurPresenter)presenter).listerLivre(a,tl);
+        TypeLivre tl = tlv[ch2 - 1];
+        ((SpecialAuteurPresenter) presenter).listerLivre(a, tl);
+    }
+
+    //Trie : ordre alphabétique du nom et du prénom
+    public static Comparator<Auteur> trieAuteur() {
+        return new Comparator<Auteur>() {
+            @Override
+            public int compare(Auteur aut1, Auteur aut2) {
+                int resultat = aut1.getNom().compareTo(aut2.getNom());
+                if (resultat != 0) {
+                    return resultat;
+                } else {
+                    return aut1.getPrenom().compareTo(aut2.getPrenom());
+                }
+            }
+        };
     }
 
 }

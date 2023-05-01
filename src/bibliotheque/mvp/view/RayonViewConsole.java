@@ -1,11 +1,17 @@
 package bibliotheque.mvp.view;
 
 import bibliotheque.metier.*;
+import bibliotheque.mvp.presenter.SpecialRayonPresenter;
 
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
 import static bibliotheque.utilitaires.Utilitaire.*;
 
-public class RayonViewConsole extends AbstractViewConsole {
+public class RayonViewConsole extends AbstractViewConsole<Rayon> implements SpecialRayonViewConsole {
     @Override
     protected void rechercher() {
         System.out.println("code du rayon : ");
@@ -16,6 +22,20 @@ public class RayonViewConsole extends AbstractViewConsole {
 
     @Override
     protected void modifier() {
+        int choix = choixElt(ldatas);
+        Rayon r = ldatas.get(choix - 1);
+        do {
+            try {
+                String genre = modifyIfNotBlank("nom", r.getGenre());
+                r.setGenre(genre);
+                break;
+            } catch (Exception e) {
+                System.out.printf("erreur : " + e);
+            }
+        } while (true);
+        presenter.update(r);
+        ldatas = presenter.getAll();
+        affListe(ldatas);
 
     }
 
@@ -42,6 +62,35 @@ public class RayonViewConsole extends AbstractViewConsole {
 
     @Override
     protected void special() {
+        int choix = choixElt(ldatas);
+        Rayon r = ldatas.get(choix - 1);
 
+        List options = new ArrayList<>(Arrays.asList("lister exemplaires", "fin"));
+        do {
+            int choix2 = choixListe(options);
+            switch (choix2) {
+                case 1:
+                    exemplaires(r);
+                    break;
+                case 2:
+                    return;
+            }
+        } while (true);
+    }
+
+    @Override
+    public void exemplaires(Rayon r) {
+        ((SpecialRayonPresenter) presenter).listerExemplaires(r);
+    }
+
+    //Trie : ordre alphabétique du genre
+    public static Comparator<Rayon> trieRayon() {
+        return new Comparator<Rayon>() {
+            @Override
+            public int compare(Rayon r1, Rayon r2) {
+                int resultat = r1.getGenre().compareTo(r2.getGenre());
+                return resultat;
+            }
+        };
     }
 }

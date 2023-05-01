@@ -6,6 +6,7 @@ import bibliotheque.mvp.presenter.SpecialExemplairePresenter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import static bibliotheque.utilitaires.Utilitaire.*;
@@ -159,5 +160,16 @@ public class ExemplaireViewConsole extends AbstractViewConsole<Exemplaire> imple
         System.out.println("nouvel état :");
         String etat = sc.nextLine();
         ((ExemplairePresenter)presenter).modifierEtat(ex,etat) ;
+    }
+
+    //Trie : ordre alphanumérique du code
+    public static Comparator<Exemplaire> trieExemplaire() {
+        return new Comparator<Exemplaire>() {
+            @Override
+            public int compare(Exemplaire ex1, Exemplaire ex2) {
+                int resultat = ex1.getRayon().getCodeRayon().compareTo(ex2.getRayon().getCodeRayon());
+                return resultat;
+            }
+        };
     }
 }

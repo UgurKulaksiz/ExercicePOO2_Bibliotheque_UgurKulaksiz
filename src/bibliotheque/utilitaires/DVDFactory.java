@@ -15,7 +15,13 @@ public class DVDFactory extends OuvrageFactory {
         long code = sc.nextLong();
         LocalTime dureeTotale = Utilitaire.lecTime();
         byte nbreBonus = sc.nextByte();
-        DVD dvd = new DVD(titre, ageMin, dateParution, prixLocation, langue, genre, code, dureeTotale, nbreBonus);
+        DVD dvd = null;
+        try {
+            dvd = new DVD(titre,ageMin,dateParution,prixLocation,langue,genre,code,dureeTotale,nbreBonus);
+        } catch (Exception e) {
+            System.out.println("erreur :"+e);
+        }
+
         System.out.println("Autres langues");
         List<String> langues = new ArrayList<>(Arrays.asList("anglais", "français", "italien", "allemand", "fin"));
         int choix;

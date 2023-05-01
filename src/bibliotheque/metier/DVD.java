@@ -14,7 +14,8 @@ public class DVD extends Ouvrage {
     private List<String> autresLangues = new ArrayList<>();
     private List<String> sousTitres = new ArrayList<>();
 
-    public DVD(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre, long code, LocalTime dureeTotale, byte nbreBonus) {
+    public DVD(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre, long code,
+               LocalTime dureeTotale, byte nbreBonus) throws Exception {
         super(titre, ageMin, dateParution, TypeOuvrage.DVD, prixLocation, langue, genre);
         this.code = code;
         this.dureeTotale = dureeTotale;

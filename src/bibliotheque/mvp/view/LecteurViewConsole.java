@@ -1,15 +1,13 @@
 package bibliotheque.mvp.view;
 
+import bibliotheque.metier.Auteur;
 import bibliotheque.metier.Exemplaire;
 import bibliotheque.metier.Lecteur;
 import bibliotheque.mvp.presenter.LecteurPresenter;
 import bibliotheque.utilitaires.Utilitaire;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import static bibliotheque.utilitaires.Utilitaire.*;
 import static bibliotheque.utilitaires.Utilitaire.lireInt;
@@ -109,6 +107,20 @@ public class LecteurViewConsole extends AbstractViewConsole<Lecteur> {
             }
         } while (true);
 
+    }
 
+    //Trie : ordre alphabétique du nom et du prénom
+    public static Comparator<Lecteur> trieLecteur() {
+        return new Comparator<Lecteur>() {
+            @Override
+            public int compare(Lecteur lec1, Lecteur lec2) {
+                int resultat = lec1.getNom().compareTo(lec2.getNom());
+                if (resultat != 0) {
+                    return resultat;
+                } else {
+                    return lec1.getPrenom().compareTo(lec2.getPrenom());
+                }
+            }
+        };
     }
 }
