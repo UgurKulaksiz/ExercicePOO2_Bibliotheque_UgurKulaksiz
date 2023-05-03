@@ -3,6 +3,7 @@ package bibliotheque.mvp.view;
 import bibliotheque.metier.*;
 import bibliotheque.mvp.presenter.ExemplairePresenter;
 import bibliotheque.mvp.presenter.SpecialExemplairePresenter;
+import bibliotheque.utilitaires.comparators.ExemplaireComparator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +13,13 @@ import java.util.List;
 import static bibliotheque.utilitaires.Utilitaire.*;
 
 public class ExemplaireViewConsole extends AbstractViewConsole<Exemplaire> implements SpecialExemplaireViewConsole {
+    @Override
+    public void setListDatas(List<Exemplaire> ldatas) {
+        Comparator<Exemplaire> cmp = new ExemplaireComparator();
+        ldatas.sort(cmp);
+        super.setListDatas(ldatas);
+    }
+
     @Override
     protected void rechercher() {
         try{

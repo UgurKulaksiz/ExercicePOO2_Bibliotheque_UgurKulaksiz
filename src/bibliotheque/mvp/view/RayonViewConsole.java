@@ -2,6 +2,7 @@ package bibliotheque.mvp.view;
 
 import bibliotheque.metier.*;
 import bibliotheque.mvp.presenter.SpecialRayonPresenter;
+import bibliotheque.utilitaires.comparators.RayonComparator;
 
 
 import java.util.ArrayList;
@@ -12,6 +13,13 @@ import java.util.List;
 import static bibliotheque.utilitaires.Utilitaire.*;
 
 public class RayonViewConsole extends AbstractViewConsole<Rayon> implements SpecialRayonViewConsole {
+    @Override
+    public void setListDatas(List<Rayon> ldatas) {
+        Comparator<Rayon> cmp = new RayonComparator();
+        ldatas.sort(cmp);
+        super.setListDatas(ldatas);
+    }
+
     @Override
     protected void rechercher() {
         System.out.println("code du rayon : ");

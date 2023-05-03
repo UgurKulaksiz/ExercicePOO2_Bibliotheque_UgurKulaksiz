@@ -1,19 +1,23 @@
 package bibliotheque.mvp.view;
 
-import bibliotheque.metier.Auteur;
-import bibliotheque.metier.Exemplaire;
 import bibliotheque.metier.Ouvrage;
 import bibliotheque.metier.TypeOuvrage;
-import bibliotheque.mvp.presenter.OuvragePresenter;
 import bibliotheque.mvp.presenter.SpecialOuvragePresenter;
 import bibliotheque.utilitaires.*;
+import bibliotheque.utilitaires.comparators.OuvrageComparator;
 
-import java.time.LocalDate;
 import java.util.*;
 
 import static bibliotheque.utilitaires.Utilitaire.*;
 
 public class OuvrageViewConsole extends AbstractViewConsole<Ouvrage> implements SpecialOuvrageViewConsole {
+    @Override
+    public void setListDatas(List<Ouvrage> ldatas) {
+        Comparator<Ouvrage> cmp = new OuvrageComparator();
+        ldatas.sort(cmp);
+        super.setListDatas(ldatas);
+    }
+
     @Override
     protected void rechercher() {
         //TODO rechercher ouvrage

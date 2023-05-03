@@ -5,6 +5,8 @@ import bibliotheque.metier.Exemplaire;
 import bibliotheque.metier.Lecteur;
 import bibliotheque.mvp.presenter.LecteurPresenter;
 import bibliotheque.utilitaires.Utilitaire;
+import bibliotheque.utilitaires.comparators.AuteurComparator;
+import bibliotheque.utilitaires.comparators.LecteurComparator;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -13,6 +15,13 @@ import static bibliotheque.utilitaires.Utilitaire.*;
 import static bibliotheque.utilitaires.Utilitaire.lireInt;
 
 public class LecteurViewConsole extends AbstractViewConsole<Lecteur> {
+    @Override
+    public void setListDatas(List<Lecteur> ldatas) {
+        Comparator<Lecteur> cmp = new LecteurComparator();
+        ldatas.sort(cmp);
+        super.setListDatas(ldatas);
+    }
+
     protected  void rechercher() {
         System.out.println("numLecteur : ");
         int idLecteur = sc.nextInt();
