@@ -4,9 +4,6 @@ import bibliotheque.metier.Auteur;
 import bibliotheque.metier.Exemplaire;
 import bibliotheque.metier.Lecteur;
 import bibliotheque.mvp.presenter.LecteurPresenter;
-import bibliotheque.utilitaires.Utilitaire;
-import bibliotheque.utilitaires.comparators.AuteurComparator;
-import bibliotheque.utilitaires.comparators.LecteurComparator;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -17,9 +14,23 @@ import static bibliotheque.utilitaires.Utilitaire.lireInt;
 public class LecteurViewConsole extends AbstractViewConsole<Lecteur> {
     @Override
     public void setListDatas(List<Lecteur> ldatas) {
+        /*
         Comparator<Lecteur> cmp = new LecteurComparator();
         ldatas.sort(cmp);
         super.setListDatas(ldatas);
+         */
+        ldatas.sort((o1, o2) -> {
+            if(o1.getNom().compareTo(o2.getNom())!=0) return (o1.getNom().compareTo(o2.getNom()));
+            return o1.getPrenom().compareTo(o2.getPrenom())  ;
+        });
+
+        //Lambda expressions
+        /* Enoncé V7 : Remplacez les instructions de tri utilisant une classe anonyme
+        par une lambda expression.
+         */
+        Comparator<Lecteur> cmp = (lec1,lec2)-> lec1.getNom().compareTo(lec2.getNom());
+        cmp = cmp.thenComparing((lec1,lec2)-> lec1.getPrenom().compareTo(lec2.getPrenom()));
+        ldatas.sort(cmp);
     }
 
     protected  void rechercher() {

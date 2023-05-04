@@ -15,8 +15,18 @@ import static bibliotheque.utilitaires.Utilitaire.*;
 public class ExemplaireViewConsole extends AbstractViewConsole<Exemplaire> implements SpecialExemplaireViewConsole {
     @Override
     public void setListDatas(List<Exemplaire> ldatas) {
-        Comparator<Exemplaire> cmp = new ExemplaireComparator();
+        /*Comparator<Exemplaire> cmp = new ExemplaireComparator();
         ldatas.sort(cmp);
+        super.setListDatas(ldatas);
+         */
+
+        //Lambda expressions
+        /* Enoncé V7 : Remplacez les instructions de tri utilisant une classe anonyme
+        par une lambda expression.
+         */
+        Comparator<Exemplaire> cmp = (a1,a2)-> a1.getRayon().getCodeRayon().compareTo(a2.getRayon().getCodeRayon());
+        ldatas.sort(cmp);
+
         super.setListDatas(ldatas);
     }
 

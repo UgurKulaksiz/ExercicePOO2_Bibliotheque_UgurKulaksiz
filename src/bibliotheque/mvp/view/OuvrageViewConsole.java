@@ -1,5 +1,6 @@
 package bibliotheque.mvp.view;
 
+import bibliotheque.metier.Lecteur;
 import bibliotheque.metier.Ouvrage;
 import bibliotheque.metier.TypeOuvrage;
 import bibliotheque.mvp.presenter.SpecialOuvragePresenter;
@@ -13,9 +14,17 @@ import static bibliotheque.utilitaires.Utilitaire.*;
 public class OuvrageViewConsole extends AbstractViewConsole<Ouvrage> implements SpecialOuvrageViewConsole {
     @Override
     public void setListDatas(List<Ouvrage> ldatas) {
-        Comparator<Ouvrage> cmp = new OuvrageComparator();
+        /*Comparator<Ouvrage> cmp = new OuvrageComparator();
         ldatas.sort(cmp);
         super.setListDatas(ldatas);
+         */
+
+        //Lambda expressions
+        /* Enoncé V7 : Remplacez les instructions de tri utilisant une classe anonyme
+        par une lambda expression.
+         */
+        Comparator<Ouvrage> cmp = (ouv1, ouv2)-> ouv1.getTitre().compareTo(ouv2.getTitre());
+        ldatas.sort(cmp);
     }
 
     @Override
