@@ -25,7 +25,7 @@ public class RayonViewConsole extends AbstractViewConsole<Rayon> implements Spec
         par une lambda expression.
          */
         Comparator<Rayon> cmp = (ray1,ray2)-> ray1.getGenre().compareTo(ray2.getGenre());
-        ldatas.sort(cmp
+        ldatas.sort(cmp);
     }
 
     @Override
