@@ -1,11 +1,12 @@
 package bibliotheque.mvp.model;
 
+import bibliotheque.metier.Exemplaire;
 import bibliotheque.metier.Rayon;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RayonModelV2 implements DAO<Rayon> {
+public class RayonModelV2 implements DAO<Rayon>, SpecialRayon {
     private List<Rayon> ldatas = new ArrayList<>();
 
     public Rayon add(Rayon nl) {
@@ -38,6 +39,11 @@ public class RayonModelV2 implements DAO<Rayon> {
     @Override
     public List<Rayon> getAll() {
         return ldatas;
+    }
+
+    @Override
+    public List<Exemplaire> listerExemplaires(Rayon r) {
+        return r.listerExemplaires();
     }
 
 }

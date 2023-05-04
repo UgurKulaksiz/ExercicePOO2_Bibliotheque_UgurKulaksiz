@@ -10,8 +10,8 @@ public class Auteur {
     private List<Ouvrage> louvrage = new ArrayList<>();
 
     public Auteur(String nom, String prenom, String nationalite) throws Exception {
-        if (nom.trim().equals("") || prenom.trim().equals("") || nationalite.trim().equals(""))
-            throw new Exception("Nom ou Prénom ou Nationalité invalide! ");
+        if(nom==null || nom.trim().equals("")) throw new Exception ("nom vide");
+
         this.nom = nom;
         this.prenom = prenom;
         this.nationalite = nationalite;
