@@ -35,6 +35,7 @@ public class AuteurViewConsole extends AbstractViewConsole<Auteur> implements Sp
         cmp=cmp.thenComparing((a1,a2)-> a1.getPrenom().compareTo(a2.getPrenom()));
         ldatas.sort(cmp);
 
+
         super.setListDatas(ldatas);
     }
 
@@ -137,6 +138,18 @@ public class AuteurViewConsole extends AbstractViewConsole<Auteur> implements Sp
     @Override
     public void listerOuvrages(Auteur a) {
         ((SpecialAuteurPresenter) presenter).listerOuvrages(a);
+
+        List<Ouvrage> lOuvrage = new ArrayList<Ouvrage>();
+        /* Enoncé V7 :
+        2.Lors de l'affichage des livres et des ouvrages d'un auteur utilisez un stream
+        et un filter pour sélectionner les éléments à retourner.
+         */
+        // Filtrage des ouvrages par auteur
+        String auteurRecherche = a.getNom();
+        List<Ouvrage> ouvragesDeAuteur = lOuvrage.stream().filter(ouvrage -> ouvrage.getLauteurs().equals(auteurRecherche)).toList();
+
+        // Affichage des ouvrages filtrés
+        ouvragesDeAuteur.forEach(ouvrage -> System.out.println(ouvrage.toString()));
     }
 
     @Override
@@ -145,6 +158,18 @@ public class AuteurViewConsole extends AbstractViewConsole<Auteur> implements Sp
         int ch2 = choixListe(List.of(tlv));
         TypeLivre tl = tlv[ch2 - 1];
         ((SpecialAuteurPresenter) presenter).listerLivre(a, tl);
+
+        List<Livre> lLivre = new ArrayList<Livre>();
+         /* Enoncé V7 :
+        2.Lors de l'affichage des livres et des ouvrages d'un auteur utilisez un stream
+        et un filter pour sélectionner les éléments à retourner.
+         */
+        // Filtrage des livres par auteur
+        String auteurRecherche = a.getNom();
+        List<Livre> livresDeAuteur = lLivre.stream().filter(livre -> livre.getLauteurs().equals(auteurRecherche)).toList();
+
+        // Affichage des ouvrages filtrés
+        livresDeAuteur.forEach(livre -> System.out.println(livre.toString()));
     }
 
 }
