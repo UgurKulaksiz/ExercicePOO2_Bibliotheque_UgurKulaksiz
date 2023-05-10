@@ -2,10 +2,7 @@ package bibliotheque.mvp.view;
 
 import bibliotheque.mvp.presenter.Presenter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import static bibliotheque.utilitaires.Utilitaire.*;
 
@@ -19,9 +16,15 @@ public abstract class AbstractViewConsole<T> implements ViewInterface<T> {
         this.presenter = presenter;
     }
 
+    /* Enoncé V7
+    3.Une fois toutes les instructions de tri développées, faites en sorte que le critère
+    de tri soit passé en paramètre de la méthode setListDatas de la classe générique
+    abstraite vue à partir du presenter.
+    */
     @Override
-    public void setListDatas(List<T> ldatas) {
+    public void setListDatas(List<T> ldatas, Comparator<T> cmp) {
         this.ldatas = ldatas;
+        this.ldatas.sort(cmp);
         affListe(ldatas);
         menu();
     }

@@ -189,5 +189,20 @@ public class Exemplaire {
         return false;
     }
 
+    public void envoiMailAuxLecteurs(Mail m){
+        List<Lecteur> lLecteurs = lecteurs();
+        if (lLecteurs.isEmpty()){
+            System.out.println("Aucun lecteur enregistré ");
+        }else{
+            for (Lecteur lec : lLecteurs){
+                Mail mailLoueur = new Mail("Information", "Vous avez loué les exemplaires suivants : \n"+
+                        "Matricule de l'exemplaire : "+matricule+"\n"+
+                        "Titre de l'ouvrage : "+ getOuvrage().titre+"\n"+
+                        "La bilbiothéque", m.getDateEnvoi());
+                mailLoueur.envoi(lec.getMail());
+            }
+        }
+    }
+
 
 }

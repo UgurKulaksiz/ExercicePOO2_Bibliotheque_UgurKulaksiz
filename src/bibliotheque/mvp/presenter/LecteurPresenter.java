@@ -8,11 +8,12 @@ import bibliotheque.mvp.model.SpecialLecteur;
 import bibliotheque.mvp.view.LecteurViewInterface;
 import bibliotheque.mvp.view.ViewInterface;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class LecteurPresenter extends Presenter<Lecteur> implements SpecialLecteurPresenter {
-    public LecteurPresenter(DAO<Lecteur> model, ViewInterface<Lecteur> view) {
-        super(model,view);
+    public LecteurPresenter(DAO<Lecteur> model, ViewInterface<Lecteur> view, Comparator<Lecteur> cmp) {
+        super(model,view, cmp);
     }
 
 

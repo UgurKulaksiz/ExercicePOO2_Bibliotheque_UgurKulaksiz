@@ -8,6 +8,8 @@ import bibliotheque.mvp.model.DAO;
 import bibliotheque.mvp.model.SpecialLocation;
 import bibliotheque.mvp.view.ViewInterface;
 
+import java.util.Comparator;
+
 
 public class LocationPresenter extends Presenter<Location> implements SpecialLocationPresenter {
     private Presenter<Exemplaire> exemplairePresenter;
@@ -34,8 +36,8 @@ public class LocationPresenter extends Presenter<Location> implements SpecialLoc
     public Lecteur choixLecteur(){
         return lecteurPresenter.selection();
     }
-    public LocationPresenter(DAO<Location> model, ViewInterface<Location> view) {
-        super(model,view);
+    public LocationPresenter(DAO<Location> model, ViewInterface<Location> view, Comparator<Location> cmp) {
+        super(model,view, cmp);
     }
 
     @Override

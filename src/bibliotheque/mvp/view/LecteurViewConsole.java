@@ -12,13 +12,14 @@ import static bibliotheque.utilitaires.Utilitaire.*;
 import static bibliotheque.utilitaires.Utilitaire.lireInt;
 
 public class LecteurViewConsole extends AbstractViewConsole<Lecteur> {
+    /*
     @Override
     public void setListDatas(List<Lecteur> ldatas) {
         /*
         Comparator<Lecteur> cmp = new LecteurComparator();
         ldatas.sort(cmp);
         super.setListDatas(ldatas);
-         */
+
         ldatas.sort((o1, o2) -> {
             if(o1.getNom().compareTo(o2.getNom())!=0) return (o1.getNom().compareTo(o2.getNom()));
             return o1.getPrenom().compareTo(o2.getPrenom())  ;
@@ -27,59 +28,60 @@ public class LecteurViewConsole extends AbstractViewConsole<Lecteur> {
         //Lambda expressions
         /* Enoncé V7 : Remplacez les instructions de tri utilisant une classe anonyme
         par une lambda expression.
-         */
+
         Comparator<Lecteur> cmp = (lec1,lec2)-> lec1.getNom().compareTo(lec2.getNom());
         cmp = cmp.thenComparing((lec1,lec2)-> lec1.getPrenom().compareTo(lec2.getPrenom()));
         ldatas.sort(cmp);
     }
+    */
 
-    protected  void rechercher() {
+    protected void rechercher() {
         System.out.println("numLecteur : ");
         int idLecteur = sc.nextInt();
         Lecteur rech = null;
         try {
-            rech = new Lecteur(idLecteur,"zzz","zzz",null,null,null,null);
+            rech = new Lecteur(idLecteur, "zzz", "zzz", null, null, null, null);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         presenter.search(rech);
     }
 
-    protected  void modifier() {
+    protected void modifier() {
         int choix = choixElt(ldatas);
-        Lecteur l = ldatas.get(choix-1);
-        String nom = modifyIfNotBlank("nom",l.getNom());
-        String prenom = modifyIfNotBlank("prénom",l.getPrenom());
-        String date = modifyIfNotBlank("date de naissance",getDateFrench(l.getDn()));
+        Lecteur l = ldatas.get(choix - 1);
+        String nom = modifyIfNotBlank("nom", l.getNom());
+        String prenom = modifyIfNotBlank("prénom", l.getPrenom());
+        String date = modifyIfNotBlank("date de naissance", getDateFrench(l.getDn()));
         String[] jma = date.split(" ");
         int j = Integer.parseInt(jma[0]);
         int m = Integer.parseInt(jma[1]);
         int a = Integer.parseInt(jma[2]);
         LocalDate dn = LocalDate.of(a, m, j);
-        String adr = modifyIfNotBlank("adresse",l.getAdresse());
-        String mail= modifyIfNotBlank("mail",l.getMail());
-        String tel =modifyIfNotBlank("tel",l.getTel());
+        String adr = modifyIfNotBlank("adresse", l.getAdresse());
+        String mail = modifyIfNotBlank("mail", l.getMail());
+        String tel = modifyIfNotBlank("tel", l.getTel());
         Lecteur lec = null;
         try {
             lec = new Lecteur(l.getNumlecteur(), nom, prenom, dn, adr, mail, tel);
         } catch (Exception e) {
-            System.out.println("erreur :"+e);
+            System.out.println("erreur :" + e);
         }
         presenter.update(lec);
-        ldatas=presenter.getAll();//rafraichissement
+        ldatas = presenter.getAll();//rafraichissement
         affListe(ldatas);
     }
 
-    protected  void retirer() {
+    protected void retirer() {
         int choix = choixElt(ldatas);
-        Lecteur lecteur = ldatas.get(choix-1);
+        Lecteur lecteur = ldatas.get(choix - 1);
         presenter.remove(lecteur);
-        ldatas=presenter.getAll();//rafraichissement
+        ldatas = presenter.getAll();//rafraichissement
         affListe(ldatas);
     }
 
 
-    protected  void ajouter() {
+    protected void ajouter() {
         System.out.println("nom ");
         String nom = sc.nextLine();
         System.out.println("prénom ");
@@ -100,15 +102,16 @@ public class LecteurViewConsole extends AbstractViewConsole<Lecteur> {
         try {
             lec = new Lecteur(0, nom, prenom, dn, adr, mail, tel);
             presenter.add(lec);
-            ldatas=presenter.getAll();//rafraichissement
+            ldatas = presenter.getAll();//rafraichissement
             affListe(ldatas);
         } catch (Exception e) {
-            System.out.println("erreur : "+e);
+            System.out.println("erreur : " + e);
         }
     }
-    protected  void special() {
-        int choix =  choixElt(ldatas);
-        Lecteur lec = ldatas.get(choix-1);
+
+    protected void special() {
+        int choix = choixElt(ldatas);
+        Lecteur lec = ldatas.get(choix - 1);
         do {
             System.out.println("1.Exemplaire en location\n2.Exemplaires loués\n3.menu principal");
             System.out.println("choix : ");
@@ -116,12 +119,13 @@ public class LecteurViewConsole extends AbstractViewConsole<Lecteur> {
             sc.skip("\n");
             switch (ch) {
                 case 1:
-                    ((LecteurPresenter)presenter).exemplairesEnLocation(lec);
+                    ((LecteurPresenter) presenter).exemplairesEnLocation(lec);
                     break;
                 case 2:
-                    ((LecteurPresenter)presenter).exemplairesLoues(lec);
+                    ((LecteurPresenter) presenter).exemplairesLoues(lec);
                     break;
-                case 3: return;
+                case 3:
+                    return;
                 default:
                     System.out.println("choix invalide recommencez ");
             }

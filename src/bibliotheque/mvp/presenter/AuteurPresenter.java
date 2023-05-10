@@ -5,11 +5,12 @@ import bibliotheque.mvp.model.DAO;
 import bibliotheque.mvp.model.SpecialAuteur;
 import bibliotheque.mvp.view.ViewInterface;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class AuteurPresenter extends Presenter<Auteur> implements SpecialAuteurPresenter {
-    public AuteurPresenter(DAO<Auteur> model, ViewInterface<Auteur> view) {
-        super(model, view);
+    public AuteurPresenter(DAO<Auteur> model, ViewInterface<Auteur> view, Comparator<Auteur> cmp) {
+        super(model, view, cmp);
     }
     @Override
     public void  listerOuvrages(Auteur a) {

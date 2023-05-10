@@ -12,6 +12,7 @@ import java.util.List;
 import static bibliotheque.utilitaires.Utilitaire.*;
 
 public class AuteurViewConsole extends AbstractViewConsole<Auteur> implements SpecialAuteurViewConsole {
+    /*
     @Override
     public void setListDatas(List<Auteur> ldatas) {
         //Comparator<Auteur> cmp = new AuteurComparator();
@@ -21,7 +22,7 @@ public class AuteurViewConsole extends AbstractViewConsole<Auteur> implements Sp
         /* Enoncé V6 :
         Remplacez les codes de tri faisant appel à des Classes Comparator "concrètes"
         par des classes anonymes.
-         */
+
         ldatas.sort((o1, o2) -> {
             if(o1.getNom().compareTo(o2.getNom())!=0) return (o1.getNom().compareTo(o2.getNom()));
             return o1.getPrenom().compareTo(o2.getPrenom())  ;
@@ -30,7 +31,7 @@ public class AuteurViewConsole extends AbstractViewConsole<Auteur> implements Sp
         //Lambda expressions
         /* Enoncé V7 : Remplacez les instructions de tri utilisant une classe anonyme
         par une lambda expression.
-         */
+
         Comparator<Auteur> cmp = (a1,a2)-> a1.getNom().compareTo(a2.getNom());
         cmp=cmp.thenComparing((a1,a2)-> a1.getPrenom().compareTo(a2.getPrenom()));
         ldatas.sort(cmp);
@@ -38,6 +39,7 @@ public class AuteurViewConsole extends AbstractViewConsole<Auteur> implements Sp
 
         super.setListDatas(ldatas);
     }
+    */
 
     @Override
     protected void rechercher() {

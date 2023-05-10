@@ -13,6 +13,7 @@ import java.util.List;
 import static bibliotheque.utilitaires.Utilitaire.*;
 
 public class RayonViewConsole extends AbstractViewConsole<Rayon> implements SpecialRayonViewConsole {
+   /*
     @Override
     public void setListDatas(List<Rayon> ldatas) {
         /*Comparator<Rayon> cmp = new RayonComparator();
@@ -23,10 +24,12 @@ public class RayonViewConsole extends AbstractViewConsole<Rayon> implements Spec
         //Lambda expressions
         /* Enoncé V7 : Remplacez les instructions de tri utilisant une classe anonyme
         par une lambda expression.
-         */
+
         Comparator<Rayon> cmp = (ray1,ray2)-> ray1.getGenre().compareTo(ray2.getGenre());
         ldatas.sort(cmp);
     }
+    */
+
 
     @Override
     protected void rechercher() {

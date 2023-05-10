@@ -12,6 +12,7 @@ import java.util.*;
 import static bibliotheque.utilitaires.Utilitaire.*;
 
 public class OuvrageViewConsole extends AbstractViewConsole<Ouvrage> implements SpecialOuvrageViewConsole {
+   /*
     @Override
     public void setListDatas(List<Ouvrage> ldatas) {
         /*Comparator<Ouvrage> cmp = new OuvrageComparator();
@@ -22,10 +23,11 @@ public class OuvrageViewConsole extends AbstractViewConsole<Ouvrage> implements 
         //Lambda expressions
         /* Enoncé V7 : Remplacez les instructions de tri utilisant une classe anonyme
         par une lambda expression.
-         */
+
         Comparator<Ouvrage> cmp = (ouv1, ouv2)-> ouv1.getTitre().compareTo(ouv2.getTitre());
         ldatas.sort(cmp);
     }
+    */
 
     @Override
     protected void rechercher() {
