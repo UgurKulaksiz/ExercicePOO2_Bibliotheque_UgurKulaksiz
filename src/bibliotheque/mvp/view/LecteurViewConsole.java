@@ -4,6 +4,7 @@ import bibliotheque.metier.Auteur;
 import bibliotheque.metier.Exemplaire;
 import bibliotheque.metier.Lecteur;
 import bibliotheque.mvp.presenter.LecteurPresenter;
+import bibliotheque.mvp.presenter.SpecialLecteurPresenter;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -11,7 +12,7 @@ import java.util.*;
 import static bibliotheque.utilitaires.Utilitaire.*;
 import static bibliotheque.utilitaires.Utilitaire.lireInt;
 
-public class LecteurViewConsole extends AbstractViewConsole<Lecteur> {
+public class LecteurViewConsole extends AbstractViewConsole<Lecteur> implements SpecialLecteurViewConsole {
     /*
     @Override
     public void setListDatas(List<Lecteur> ldatas) {
@@ -113,7 +114,7 @@ public class LecteurViewConsole extends AbstractViewConsole<Lecteur> {
         int choix = choixElt(ldatas);
         Lecteur lec = ldatas.get(choix - 1);
         do {
-            System.out.println("1.Exemplaire en location\n2.Exemplaires loués\n3.menu principal");
+            System.out.println("1.Exemplaire en location\n2.Exemplaires loués\n3. Recherche par mail\n4. Chargement par fichier\n5.menu principal");
             System.out.println("choix : ");
             int ch = lireInt();
             sc.skip("\n");
@@ -125,6 +126,12 @@ public class LecteurViewConsole extends AbstractViewConsole<Lecteur> {
                     ((LecteurPresenter) presenter).exemplairesLoues(lec);
                     break;
                 case 3:
+                    lecParMail();
+                    break;
+                case 4:
+                    chargmementLecteurParFichier();
+                    break;
+                case 5:
                     return;
                 default:
                     System.out.println("choix invalide recommencez ");
@@ -133,18 +140,26 @@ public class LecteurViewConsole extends AbstractViewConsole<Lecteur> {
 
     }
 
-    //Trie : ordre alphabétique du nom et du prénom
-    public static Comparator<Lecteur> trieLecteur() {
-        return new Comparator<Lecteur>() {
-            @Override
-            public int compare(Lecteur lec1, Lecteur lec2) {
-                int resultat = lec1.getNom().compareTo(lec2.getNom());
-                if (resultat != 0) {
-                    return resultat;
-                } else {
-                    return lec1.getPrenom().compareTo(lec2.getPrenom());
-                }
-            }
-        };
+    @Override
+    public void exemplairesLoues(Lecteur lec) {
+        ((SpecialLecteurPresenter)presenter).exemplairesLoues(lec);
+    }
+
+    @Override
+    public void exemplairesLocation(Lecteur lec) {
+        ((SpecialLecteurPresenter)presenter).exemplairesEnLocation(lec);
+    }
+
+    @Override
+    public void lecParMail() {
+        //ajout pour forcer push
+        System.out.print("mail recherché : ");
+        String mail= sc.next();
+        ((SpecialLecteurPresenter)presenter).lecParMail(mail);
+    }
+
+    @Override
+    public void chargmementLecteurParFichier() {
+        ((SpecialLecteurPresenter)presenter).chargementLecteurParFichier();
     }
 }

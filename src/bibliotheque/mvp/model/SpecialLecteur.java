@@ -9,4 +9,5 @@ public interface SpecialLecteur {
     public List<Exemplaire> exemplairesEnLocation(Lecteur l);
     public List<Exemplaire> exemplairesLoues(Lecteur l);
     public Lecteur lecParMail(String mail);
+    public void chargementParFichier();
 }

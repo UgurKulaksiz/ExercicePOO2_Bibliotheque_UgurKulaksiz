@@ -20,7 +20,7 @@ public abstract class Presenter<T> {
     }
 
     public void start() {
-        view.setListDatas(getAll());
+        view.setListDatas(getAll(), cmp);
     }
 
     public List<T> getAll(){

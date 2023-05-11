@@ -3,9 +3,7 @@ package bibliotheque.mvp.presenter;
 import bibliotheque.metier.Exemplaire;
 import bibliotheque.metier.Lecteur;
 import bibliotheque.mvp.model.DAO;
-import bibliotheque.mvp.model.DAOLecteur;
 import bibliotheque.mvp.model.SpecialLecteur;
-import bibliotheque.mvp.view.LecteurViewInterface;
 import bibliotheque.mvp.view.ViewInterface;
 
 import java.util.Comparator;
@@ -28,5 +26,22 @@ public class LecteurPresenter extends Presenter<Lecteur> implements SpecialLecte
         List<Exemplaire> lex =   ((SpecialLecteur)model).exemplairesLoues(l);
         if(lex==null || lex.isEmpty()) view.affMsg("aucun exemplaire trouvé");
         else view.affList(lex);
+    }
+
+    @Override
+    public void lecParMail(String mail) {
+        Lecteur l = ((SpecialLecteur)model).lecParMail(mail);
+        if(l==null) view.affMsg("aucun lecteur pour ce mail");
+        else view.affMsg("lecteur trouvé :" +l);
+    }
+
+    /* Enoncé V8 :
+     3.Créez manuellement(avec notepad) un fichier "nouveaux_lecteurs.txt" contenant
+     les informations d'une série de nouveaux lecteurs.
+     */
+    @Override
+    public void chargementLecteurParFichier() {
+        ((SpecialLecteur)model).chargementParFichier();
+        view.affMsg("chargement des lecteurs terminé");
     }
 }

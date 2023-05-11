@@ -105,6 +105,14 @@ public class Utilitaire {
         while (true);
     }
 
+    public static LocalDate getDate(String dateLue) {
+        String[] jma = dateLue.split(" ");
+        int j = Integer.parseInt(jma[0]);
+        int m = Integer.parseInt(jma[1]);
+        int a = Integer.parseInt(jma[2]);
+        return LocalDate.of(a, m, j);
+    }
+
     public static String getDateFrench(LocalDate d){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("d MM yyyy");
         return dtf.format(d);
